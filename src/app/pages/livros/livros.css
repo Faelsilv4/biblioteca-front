@@ -1,43 +1,28 @@
-.container {
-  padding: 32px;
-  background-color: #f2f4f8;
-  min-height: 100vh;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.grid-livros {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
-}
-
-.card-livro {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-}
-
-.card-livro h2 {
-  margin-top: 0;
-  font-size: 20px;
-}
-
-.status {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background-color: #e3f2fd;
-  color: #1976d2;
+.btn-emprestar {
+  display: block;
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #1976d2;
+  color: white;
   font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-.erro {
-  color: red;
-  text-align: center;
+.btn-emprestar:hover {
+  background-color: #125ca1;
+}
+
+.btn-indisponivel {
+  display: block;
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #ccc;
+  color: #666;
+  font-weight: bold;
+  border-radius: 6px;
 }

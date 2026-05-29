@@ -1,1 +1,43 @@
-<p>meus-emprestimos works!</p>
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h1>Meus Empréstimos</h1>
+
+  @if (carregando()) {
+    <p>Carregando empréstimos...</p>
+  }
+
+  @if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  }
+
+  <div class="grid-emprestimos">
+    @for (emprestimo of emprestimos(); track emprestimo.id) {
+      <div class="card-emprestimo">
+        <h2>{{ emprestimo.nomeLivro }}</h2>
+
+        <p><strong>Aluno:</strong> {{ emprestimo.nomeUsuario }}</p>
+        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo }}</p>
+
+        <p>
+          <strong>Data da Devolução:</strong>
+          @if (emprestimo.dataDevolucao) {
+            {{ emprestimo.dataDevolucao }}
+          } @else {
+            Ainda não devolvido
+          }
+        </p>
+
+        <span class="status">
+          {{ emprestimo.statusLivro }}
+        </span>
+
+        @if (!emprestimo.dataDevolucao) {
+          <button class="btn-devolver" (click)="devolver(emprestimo.id)">
+            Devolver
+          </button>
+        }
+      </div>
+    }
+  </div>
+</div>

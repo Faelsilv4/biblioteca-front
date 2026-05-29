@@ -1,0 +1,25 @@
+<nav class="navbar">
+
+  <div class="logo">
+    📚 Biblioteca APS
+  </div>
+
+  <div class="menu">
+    <a routerLink="/livros">Livros</a>
+    <a routerLink="/meus-emprestimos">Meus Empréstimos</a>
+    <a routerLink="/perfil">Perfil</a>
+  </div>
+
+  <div class="usuario">
+
+    <span>
+      Olá, {{ nomeUsuario }}
+    </span>
+
+    <button (click)="sair()">
+      Sair
+    </button>
+
+  </div>
+
+</nav>

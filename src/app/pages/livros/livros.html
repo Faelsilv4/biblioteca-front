@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="container">
   <h1>Livros disponíveis</h1>
 
@@ -23,6 +25,16 @@
         <span class="status">
           {{ livro.status }}
         </span>
+
+        @if (livro.status === 'DISPONIVEL') {
+          <button class="btn-emprestar" (click)="emprestar(livro.id)">
+            Emprestar
+          </button>
+        } @else {
+          <button class="btn-indisponivel" disabled>
+            Indisponível
+          </button>
+        }
       </div>
     }
   </div>
