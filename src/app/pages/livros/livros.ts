@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { LivroService } from '../../services/livro.service';
 
 @Component({
   selector: 'app-livros',
@@ -6,4 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './livros.html',
   styleUrl: './livros.css',
 })
-export class Livros {}
+export class Livros implements OnInit {
+  private readonly livroService = inject(LivroService);
+
+  livros = this.livroService.listar();
+  carregando = this.livroService.estaCarregando();
+  erro = this.livroService.mensagemErro();
+
+  ngOnInit(): void {
+    this.livroService.carregar();
+  }
+}

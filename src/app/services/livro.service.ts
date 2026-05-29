@@ -29,7 +29,13 @@ export class LivroService {
     this.carregando.set(true);
     this.erro.set(null);
 
-    this.http.get<Livro[]>(this.apiUrl).subscribe({
+    const token = localStorage.getItem('token');
+
+    this.http.get<Livro[]>(this.apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).subscribe({
       next: (dados) => {
         this.livros.set(dados);
         this.carregando.set(false);
