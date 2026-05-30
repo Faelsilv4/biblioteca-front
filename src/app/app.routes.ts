@@ -6,6 +6,8 @@ import { Livros } from './pages/livros/livros';
 import { MeusEmprestimos } from './pages/meus-emprestimos/meus-emprestimos';
 import { Perfil } from './pages/perfil/perfil';
 
+import { authGuard } from './guards/auth-guard';    
+
 export const routes: Routes = [
   {
     path: '',
@@ -17,15 +19,19 @@ export const routes: Routes = [
   },
   {
     path: 'livros',
-    component: Livros
+    component: Livros,
+    canActivate: [authGuard]
+
   },
   {
     path: 'meus-emprestimos',
-    component: MeusEmprestimos
+    component: MeusEmprestimos,
+    canActivate: [authGuard]
   },
   {
     path: 'perfil',
-    component: Perfil
+    component: Perfil,
+    canActivate: [authGuard]
   },
   {
     path: '**',

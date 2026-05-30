@@ -26,49 +26,34 @@ export class EmprestimoService {
     return this.erro.asReadonly();
   }
 
-  private obterHeaders() {
-    const token = localStorage.getItem('token');
-
-    return {
-      Authorization: `Bearer ${token}`
-    };
-  }
-
   carregarMeusEmprestimos(): void {
     this.carregando.set(true);
     this.erro.set(null);
 
-    this.http.get<Emprestimo[]>(`${this.apiUrl}/meus`, {
-      headers: this.obterHeaders()
-    }).subscribe({
-      next: (dados) => {
-        this.emprestimos.set(dados);
-        this.carregando.set(false);
-      },
-      error: () => {
-        this.erro.set('Não foi possível carregar seus empréstimos.');
-        this.carregando.set(false);
-      }
-    });
+    this.http.get<Emprestimo[]>(`${this.apiUrl}/meus`)
+      .subscribe({
+        next: (dados) => {
+          this.emprestimos.set(dados);
+          this.carregando.set(false);
+        },
+        error: () => {
+          this.erro.set('Não foi possível carregar seus empréstimos.');
+          this.carregando.set(false);
+        }
+      });
   }
 
   emprestarLivro(livroId: number): Observable<Emprestimo> {
     return this.http.post<Emprestimo>(
       `${this.apiUrl}/emprestar/${livroId}`,
-      {},
-      {
-        headers: this.obterHeaders()
-      }
+      {}
     );
   }
 
   devolverLivro(emprestimoId: number) {
     return this.http.post(
       `${this.apiUrl}/devolver/${emprestimoId}`,
-      {},
-      {
-        headers: this.obterHeaders()
-      }
+      {}
     );
   }
 }
