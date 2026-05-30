@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 
+import { MatCardModule } from '@angular/material/card';
+
 @Component({
   selector: 'app-perfil',
-  imports: [Navbar],
+  imports: [
+    Navbar,
+    MatCardModule
+  ],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
 })

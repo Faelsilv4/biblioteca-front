@@ -1,37 +1,69 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Gerenciar Livros</h1>
+    <h1>Gerenciar Livros</h1>
 
-  <form class="form-card" (ngSubmit)="cadastrarLivro()">
-    <h2>Cadastrar novo livro</h2>
+    <mat-card class="form-card">
+        <mat-card-title>Cadastrar novo livro</mat-card-title>
 
-    <input type="text" placeholder="Título" name="titulo" [(ngModel)]="novoLivro.titulo" required>
-    <input type="text" placeholder="Autor" name="autor" [(ngModel)]="novoLivro.autor" required>
-    <input type="text" placeholder="Gênero" name="genero" [(ngModel)]="novoLivro.genero" required>
-    <input type="number" placeholder="Número de páginas" name="numPaginas" [(ngModel)]="novoLivro.numPaginas" required>
-    <input type="date" name="anoDePublicacao" [(ngModel)]="novoLivro.anoDePublicacao" required>
-    <input type="text" placeholder="Categoria" name="categoria" [(ngModel)]="novoLivro.categoria" required>
+        <form (ngSubmit)="cadastrarLivro()" class="form-grid">
 
-    <button type="submit">Cadastrar Livro</button>
-  </form>
+            <mat-form-field appearance="outline">
+                <mat-label>Título</mat-label>
+                <input matInput type="text" name="titulo" [(ngModel)]="novoLivro.titulo" required>
+            </mat-form-field>
 
-  <h2>Livros cadastrados</h2>
+            <mat-form-field appearance="outline">
+                <mat-label>Autor</mat-label>
+                <input matInput type="text" name="autor" [(ngModel)]="novoLivro.autor" required>
+            </mat-form-field>
 
-  <div class="grid-livros">
-    @for (livro of livros(); track livro.id) {
-      <div class="card-livro">
-        <h3>{{ livro.titulo }}</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Gênero</mat-label>
+                <input matInput type="text" name="genero" [(ngModel)]="novoLivro.genero" required>
+            </mat-form-field>
 
-        <p><strong>Autor:</strong> {{ livro.autor }}</p>
-        <p><strong>Gênero:</strong> {{ livro.genero }}</p>
-        <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
-        <p><strong>Status:</strong> {{ livro.status }}</p>
+            <mat-form-field appearance="outline">
+                <mat-label>Número de páginas</mat-label>
+                <input matInput type="number" name="numPaginas" [(ngModel)]="novoLivro.numPaginas" required>
+            </mat-form-field>
 
-        <button class="btn-remover" (click)="removerLivro(livro.id)">
-          Remover
-        </button>
-      </div>
-    }
-  </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Data de publicação</mat-label>
+                <input matInput type="date" name="anoDePublicacao" [(ngModel)]="novoLivro.anoDePublicacao" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Categoria</mat-label>
+                <input matInput type="text" name="categoria" [(ngModel)]="novoLivro.categoria" required>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" class="btn-cadastrar">
+                Cadastrar Livro
+            </button>
+        </form>
+    </mat-card>
+
+    <h2>Livros cadastrados</h2>
+
+    <div class="grid-livros">
+        @for (livro of livros(); track livro.id) {
+        <mat-card class="card-livro">
+            <mat-card-title>{{ livro.titulo }}</mat-card-title>
+
+            <mat-card-content>
+                <p><strong>Autor:</strong> {{ livro.autor }}</p>
+                <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+                <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
+                <p><strong>Status:</strong> {{ livro.status }}</p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="warn" (click)="removerLivro(livro.id)">
+                    Remover
+                </button>
+            </mat-card-actions>
+        </mat-card>
+        }
+    </div>
 </div>

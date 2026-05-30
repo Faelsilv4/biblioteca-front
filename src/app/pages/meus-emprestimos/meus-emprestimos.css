@@ -1,16 +1,68 @@
-.btn-devolver {
-  display: block;
-  margin-top: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #1976d2;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
+.container {
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  padding: 32px;
 }
 
-.btn-devolver:hover {
-  background-color: #125ca1;
+h1 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 32px;
+}
+
+.grid-emprestimos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.card-emprestimo {
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.card-emprestimo:hover {
+  transform: translateY(-3px);
+}
+
+mat-card-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.card-emprestimo p {
+  margin: 8px 0;
+}
+
+.status-container {
+  margin-top: 15px;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.emprestado {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.devolvido {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.erro {
+  color: red;
+  text-align: center;
 }

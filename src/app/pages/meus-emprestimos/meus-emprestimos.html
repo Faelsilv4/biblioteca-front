@@ -13,31 +13,41 @@
 
   <div class="grid-emprestimos">
     @for (emprestimo of emprestimos(); track emprestimo.id) {
-      <div class="card-emprestimo">
-        <h2>{{ emprestimo.nomeLivro }}</h2>
+      <mat-card class="card-emprestimo">
+        <mat-card-title>
+          {{ emprestimo.nomeLivro }}
+        </mat-card-title>
 
-        <p><strong>Aluno:</strong> {{ emprestimo.nomeUsuario }}</p>
-        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo }}</p>
+        <mat-card-content>
+          <p><strong>Aluno:</strong> {{ emprestimo.nomeUsuario }}</p>
+          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo }}</p>
 
-        <p>
-          <strong>Data da Devolução:</strong>
-          @if (emprestimo.dataDevolucao) {
-            {{ emprestimo.dataDevolucao }}
-          } @else {
-            Ainda não devolvido
+          <p>
+            <strong>Data da Devolução:</strong>
+            @if (emprestimo.dataDevolucao) {
+              {{ emprestimo.dataDevolucao }}
+            } @else {
+              Ainda não devolvido
+            }
+          </p>
+
+          <div class="status-container">
+            @if (!emprestimo.dataDevolucao) {
+              <span class="status emprestado">Emprestado</span>
+            } @else {
+              <span class="status devolvido">Devolvido</span>
+            }
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          @if (!emprestimo.dataDevolucao) {
+            <button mat-raised-button color="primary" (click)="devolver(emprestimo.id)">
+              Devolver
+            </button>
           }
-        </p>
-
-        <span class="status">
-          {{ emprestimo.statusLivro }}
-        </span>
-
-        @if (!emprestimo.dataDevolucao) {
-          <button class="btn-devolver" (click)="devolver(emprestimo.id)">
-            Devolver
-          </button>
-        }
-      </div>
+        </mat-card-actions>
+      </mat-card>
     }
   </div>
 </div>

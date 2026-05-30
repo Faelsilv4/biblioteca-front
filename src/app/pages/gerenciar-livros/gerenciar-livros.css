@@ -1,0 +1,61 @@
+.container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+h2 {
+  margin: 30px 0 20px;
+}
+
+.form-card {
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.form-grid {
+  justify-items: center;
+}
+
+.btn-cadastrar {
+    width: 250px;
+  margin: 20px auto 0;
+}
+
+.grid-livros {
+ display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.card-livro {
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.card-livro:hover {
+  transform: translateY(-4px);
+}
+
+mat-card-title {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+mat-card-content p {
+  margin: 8px 0;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0 0;
+}

@@ -1,28 +1,65 @@
-.btn-emprestar {
-  display: block;
-  margin-top: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #1976d2;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
+.container {
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  padding: 32px;
 }
 
-.btn-emprestar:hover {
-  background-color: #125ca1;
+h1 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 32px;
 }
 
-.btn-indisponivel {
-  display: block;
-  margin-top: 16px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background-color: #ccc;
-  color: #666;
-  font-weight: bold;
-  border-radius: 6px;
+.grid-livros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.card-livro {
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+mat-card-content {
+  flex: 1;
+}
+.card-livro:hover {
+  transform: translateY(-3px);
+}
+
+mat-card-title { 
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.card-livro p {
+  margin: 8px 0;
+}
+
+.status-container {
+  margin-top: 15px;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.disponivel {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.emprestado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
 }

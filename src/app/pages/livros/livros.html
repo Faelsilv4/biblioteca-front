@@ -1,7 +1,8 @@
+
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Livros disponíveis</h1>
+  <h1>Livros Disponíveis</h1>
 
   @if (carregando()) {
     <p>Carregando livros...</p>
@@ -12,30 +13,73 @@
   }
 
   <div class="grid-livros">
+
     @for (livro of livros(); track livro.id) {
-      <div class="card-livro">
-        <h2>{{ livro.titulo }}</h2>
 
-        <p><strong>Autor:</strong> {{ livro.autor }}</p>
-        <p><strong>Gênero:</strong> {{ livro.genero }}</p>
-        <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
-        <p><strong>Páginas:</strong> {{ livro.numPaginas }}</p>
-        <p><strong>Publicação:</strong> {{ livro.anoDePublicacao }}</p>
+      <mat-card class="card-livro">
 
-        <span class="status">
-          {{ livro.status }}
-        </span>
+        <mat-card-title>
+          {{ livro.titulo }}
+        </mat-card-title>
 
-        @if (livro.status === 'DISPONIVEL') {
-          <button class="btn-emprestar" (click)="emprestar(livro.id)">
-            Emprestar
-          </button>
-        } @else {
-          <button class="btn-indisponivel" disabled>
-            Indisponível
-          </button>
-        }
-      </div>
+        <mat-card-content>
+
+          <p><strong>Autor:</strong> {{ livro.autor }}</p>
+          <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+          <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
+          <p><strong>Páginas:</strong> {{ livro.numPaginas }}</p>
+          <p><strong>Publicação:</strong> {{ livro.anoDePublicacao }}</p>
+
+          <div class="status-container">
+
+            @if (livro.status === 'DISPONIVEL') {
+
+              <span class="status disponivel">
+                Disponível
+              </span>
+
+            } @else {
+
+              <span class="status emprestado">
+                Emprestado
+              </span>
+
+            }
+
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+
+          @if (livro.status === 'DISPONIVEL') {
+
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="emprestar(livro.id)">
+
+              Emprestar
+
+            </button>
+
+          } @else {
+
+            <button
+              mat-raised-button
+              disabled>
+
+              Indisponível
+
+            </button>
+
+          }
+
+        </mat-card-actions>
+
+      </mat-card>
+
     }
+
   </div>
 </div>
