@@ -6,12 +6,20 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const token = localStorage.getItem('token');
+  const tipoUsuario = localStorage.getItem('tipoUsuario');
 
-  if (token) {
-    return true;
+  if (!token) {
+    router.navigate(['/']);
+    return false;
   }
 
-  router.navigate(['/']);
+  if (
+    state.url === '/gerenciar-livros' &&
+    tipoUsuario !== 'BIBLIOTECARIO'
+  ) {
+    router.navigate(['/livros']);
+    return false;
+  }
 
-  return false;
+  return true;
 };

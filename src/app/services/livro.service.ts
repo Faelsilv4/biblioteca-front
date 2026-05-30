@@ -1,6 +1,7 @@
 import { inject, Injectable, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Livro } from '../models/livro.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -39,5 +40,16 @@ export class LivroService {
         this.carregando.set(false);
       }
     });
+  }
+
+  cadastrarLivro(livro: Omit<Livro, 'id' | 'status'>): Observable<Livro> {
+    return this.http.post<Livro>(this.apiUrl, {
+      ...livro,
+      status: 'DISPONIVEL'
+    });
+  }
+
+  removerLivro(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

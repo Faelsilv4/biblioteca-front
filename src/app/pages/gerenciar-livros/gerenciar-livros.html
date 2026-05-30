@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h1>Gerenciar Livros</h1>
+
+  <form class="form-card" (ngSubmit)="cadastrarLivro()">
+    <h2>Cadastrar novo livro</h2>
+
+    <input type="text" placeholder="Título" name="titulo" [(ngModel)]="novoLivro.titulo" required>
+    <input type="text" placeholder="Autor" name="autor" [(ngModel)]="novoLivro.autor" required>
+    <input type="text" placeholder="Gênero" name="genero" [(ngModel)]="novoLivro.genero" required>
+    <input type="number" placeholder="Número de páginas" name="numPaginas" [(ngModel)]="novoLivro.numPaginas" required>
+    <input type="date" name="anoDePublicacao" [(ngModel)]="novoLivro.anoDePublicacao" required>
+    <input type="text" placeholder="Categoria" name="categoria" [(ngModel)]="novoLivro.categoria" required>
+
+    <button type="submit">Cadastrar Livro</button>
+  </form>
+
+  <h2>Livros cadastrados</h2>
+
+  <div class="grid-livros">
+    @for (livro of livros(); track livro.id) {
+      <div class="card-livro">
+        <h3>{{ livro.titulo }}</h3>
+
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+        <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
+        <p><strong>Status:</strong> {{ livro.status }}</p>
+
+        <button class="btn-remover" (click)="removerLivro(livro.id)">
+          Remover
+        </button>
+      </div>
+    }
+  </div>
+</div>

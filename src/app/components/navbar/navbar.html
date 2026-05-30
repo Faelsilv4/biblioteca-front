@@ -1,25 +1,31 @@
 <nav class="navbar">
 
-  <div class="logo">
-    📚 Biblioteca APS
-  </div>
+    <div class="logo">
+         Biblioteca APS
+    </div>
 
-  <div class="menu">
-    <a routerLink="/livros">Livros</a>
-    <a routerLink="/meus-emprestimos">Meus Empréstimos</a>
-    <a routerLink="/perfil">Perfil</a>
-  </div>
+    <div class="menu">
+        <a routerLink="/livros">Livros</a>
 
-  <div class="usuario">
+        @if (ehAluno()) {
+        <a routerLink="/meus-emprestimos">Meus Empréstimos</a>
+        }
+        
+        <a routerLink="/perfil">Perfil</a>
 
-    <span>
-      Olá, {{ nomeUsuario }}
-    </span>
+        @if (ehBibliotecario()) {
+        <a routerLink="/gerenciar-livros">Gerenciar Livros</a>
+        }
+    </div>
 
-    <button (click)="sair()">
-      Sair
-    </button>
+    <div class="usuario">
+        <span>
+            Olá, {{ nomeUsuario }}
+        </span>
 
-  </div>
+        <button (click)="sair()">
+            Sair
+        </button>
+    </div>
 
 </nav>

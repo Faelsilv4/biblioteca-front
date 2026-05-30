@@ -19,4 +19,14 @@ export class Navbar {
     this.authService.logout();
     this.router.navigate(['/']);
   }
+
+  tipoUsuario = this.authService.obterTipoUsuario();
+
+  ehBibliotecario(): boolean {
+    return this.tipoUsuario === 'BIBLIOTECARIO';
+  }
+  
+  ehAluno(): boolean {
+  return this.tipoUsuario === 'ALUNO';
+}
 }
