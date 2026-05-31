@@ -1,0 +1,31 @@
+.container {
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+}
+
+.card-cadastro {
+  width: 100%;
+  max-width: 460px;
+  padding: 28px;
+  border-radius: 12px;
+}
+
+mat-card-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 24px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+button {
+  height: 46px;
+}

@@ -71,3 +71,17 @@ a {
   color: #1976d2;
   text-decoration: none;
 }
+
+.links-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.links-cadastro a {
+  text-decoration: none;
+  color: #1976d2;
+  font-weight: 600;
+}

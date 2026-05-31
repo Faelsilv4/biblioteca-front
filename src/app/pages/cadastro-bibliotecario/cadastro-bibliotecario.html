@@ -1,0 +1,33 @@
+<div class="container">
+  <mat-card class="card-cadastro">
+    <mat-card-title>
+      Cadastro de Bibliotecário
+    </mat-card-title>
+
+    <form (ngSubmit)="cadastrar()" class="formulario">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" name="nome" [(ngModel)]="nome" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" name="senha" [(ngModel)]="senha" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Ano de Contratação</mat-label>
+        <input matInput type="date" name="anoDeContratacao" [(ngModel)]="anoDeContratacao" required />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Cadastrar Bibliotecário
+      </button>
+    </form>
+  </mat-card>
+</div>

@@ -2,11 +2,13 @@
 
 <div class="container">
   <mat-card class="card-perfil">
+
     <mat-card-title>
       👤 Meu Perfil
     </mat-card-title>
 
     <mat-card-content>
+
       <p>
         <strong>Nome:</strong>
         {{ nome }}
@@ -21,6 +23,53 @@
         <strong>Tipo de Usuário:</strong>
         {{ tipoUsuario }}
       </p>
+
+      <hr>
+
+      @if (!editandoNome) {
+
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="editarNome()">
+          Editar Nome
+        </button>
+
+      } @else {
+
+        <h3>Atualizar Nome</h3>
+
+        <mat-form-field appearance="outline" class="campo">
+          <mat-label>Novo Nome</mat-label>
+
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="novoNome"
+          />
+        </mat-form-field>
+
+        <div class="acoes">
+
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="atualizarNome()">
+            Salvar
+          </button>
+
+          <button
+            mat-button
+            type="button"
+            (click)="cancelarEdicao()">
+            Cancelar
+          </button>
+
+        </div>
+
+      }
+
     </mat-card-content>
+
   </mat-card>
 </div>

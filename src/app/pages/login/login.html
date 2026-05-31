@@ -6,41 +6,35 @@
     <form (ngSubmit)="entrar()">
       <div class="form-group">
         <label for="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          [(ngModel)]="email"
-          placeholder="Digite seu email"
-          required
-        />
+        <input id="email" type="email" name="email" [(ngModel)]="email" placeholder="Digite seu email" required />
       </div>
 
       <div class="form-group">
         <label for="senha">Senha</label>
-        <input
-          id="senha"
-          type="password"
-          name="senha"
-          [(ngModel)]="senha"
-          placeholder="Digite sua senha"
-          required
-        />
+        <input id="senha" type="password" name="senha" [(ngModel)]="senha" placeholder="Digite sua senha" required />
       </div>
 
       @if (erro()) {
-        <p class="erro">{{ erro() }}</p>
+      <p class="erro">{{ erro() }}</p>
       }
 
       <button type="submit" [disabled]="carregando()">
         @if (carregando()) {
-          Entrando...
+        Entrando...
         } @else {
-          Entrar
+        Entrar
         }
       </button>
     </form>
 
-    <a routerLink="/cadastro-aluno">Criar conta de aluno</a>
+    <div class="links-cadastro">
+      <a routerLink="/cadastro-aluno">
+        Criar conta de aluno
+      </a>
+
+      <a routerLink="/cadastro-bibliotecario">
+        Cadastrar bibliotecário
+      </a>
+    </div>
   </div>
 </div>

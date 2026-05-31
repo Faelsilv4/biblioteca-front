@@ -17,11 +17,31 @@ interface RegistroAlunoRequest {
   matricula: number;
 }
 
+interface RegistroBibliotecarioRequest {
+  nome: string;
+  email: string;
+  senha: string;
+  anoDeContratacao: string;
+}
+
 interface RegistroResponse {
   id: number;
   nome: string;
   email: string;
   mensagem: string;
+}
+
+interface AtualizarNomeRequest {
+  novoNome: string;
+}
+
+interface PerfilResponse {
+  id: number;
+  nome: string;
+  email: string;
+  role: string;
+  matricula?: number;
+  anoDeContratacao?: string;
 }
 
 @Injectable({
@@ -50,6 +70,13 @@ export class AuthService {
     );
   }
 
+  cadastrarBibliotecario(dados: RegistroBibliotecarioRequest): Observable<RegistroResponse> {
+  return this.http.post<RegistroResponse>(
+    `${this.apiUrl}/register/bibliotecario`,
+    dados
+  );
+}
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('tipoUsuario');
@@ -71,5 +98,16 @@ export class AuthService {
 
   obterTipoUsuario(): string | null {
     return localStorage.getItem('tipoUsuario');
+  }
+
+  atualizarNome(dados: AtualizarNomeRequest): Observable<PerfilResponse> {
+    return this.http.put<PerfilResponse>(
+      'http://localhost:8080/api/perfil',
+      dados
+    ).pipe(
+      tap((resposta) => {
+        localStorage.setItem('nome', resposta.nome);
+      })
+    );
   }
 }
