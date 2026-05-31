@@ -4,50 +4,50 @@
   <h1>Meus Empréstimos</h1>
 
   @if (carregando()) {
-    <p>Carregando empréstimos...</p>
+  <p>Carregando empréstimos...</p>
   }
 
   @if (erro()) {
-    <p class="erro">{{ erro() }}</p>
+  <p class="erro">{{ erro() }}</p>
   }
 
   <div class="grid-emprestimos">
     @for (emprestimo of emprestimos(); track emprestimo.id) {
-      <mat-card class="card-emprestimo">
-        <mat-card-title>
-          {{ emprestimo.nomeLivro }}
-        </mat-card-title>
+    <mat-card class="card-emprestimo">
+      <mat-card-title>
+        {{ emprestimo.nomeLivro }}
+      </mat-card-title>
 
-        <mat-card-content>
-          <p><strong>Aluno:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
-          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
+      <mat-card-content>
+        
+        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
 
-          <p>
-            <strong>Data da Devolução:</strong>
-            @if (emprestimo.dataDevolucao) {
-              {{ emprestimo.dataDevolucao | dataBr }}
-            } @else {
-              Ainda não devolvido
-            }
-          </p>
-
-          <div class="status-container">
-            @if (!emprestimo.dataDevolucao) {
-              <span class="status emprestado">Emprestado</span>
-            } @else {
-              <span class="status devolvido">Devolvido</span>
-            }
-          </div>
-        </mat-card-content>
-
-        <mat-card-actions>
-          @if (!emprestimo.dataDevolucao) {
-            <button mat-raised-button color="primary" (click)="devolver(emprestimo.id)">
-              Devolver
-            </button>
+        <p>
+          <strong>Data da Devolução:</strong>
+          @if (emprestimo.dataDevolucao) {
+          {{ emprestimo.dataDevolucao | dataBr }}
+          } @else {
+          Ainda não devolvido
           }
-        </mat-card-actions>
-      </mat-card>
+        </p>
+
+        <div class="status-container">
+          @if (!emprestimo.dataDevolucao) {
+          <span class="status emprestado">Emprestado</span>
+          } @else {
+          <span class="status devolvido">Devolvido</span>
+          }
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        @if (!emprestimo.dataDevolucao) {
+        <button mat-raised-button color="primary" (click)="devolver(emprestimo.id)">
+          Devolver
+        </button>
+        }
+      </mat-card-actions>
+    </mat-card>
     }
   </div>
 </div>
