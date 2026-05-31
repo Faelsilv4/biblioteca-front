@@ -1,85 +1,66 @@
-
 <app-navbar></app-navbar>
 
 <div class="container">
   <h1>Livros Disponíveis</h1>
 
+  <mat-form-field appearance="outline" class="campo-pesquisa">
+    <mat-label>Pesquisar livro</mat-label>
+
+    <input matInput type="text" name="filtro" [(ngModel)]="filtro" placeholder="Título, autor, gênero ou categoria" />
+  </mat-form-field>
+
   @if (carregando()) {
-    <p>Carregando livros...</p>
+  <p>Carregando livros...</p>
   }
 
   @if (erro()) {
-    <p class="erro">{{ erro() }}</p>
+  <p class="erro">{{ erro() }}</p>
   }
 
   <div class="grid-livros">
-
-    @for (livro of livros(); track livro.id) {
-
-      <mat-card class="card-livro">
-
-        <mat-card-title>
-          {{ livro.titulo }}
-        </mat-card-title>
-
-        <mat-card-content>
-
-          <p><strong>Autor:</strong> {{ livro.autor }}</p>
-          <p><strong>Gênero:</strong> {{ livro.genero }}</p>
-          <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
-          <p><strong>Páginas:</strong> {{ livro.numPaginas }}</p>
-          <p><strong>Publicação:</strong> {{ livro.anoDePublicacao | dataBr }}</p>
-
-          <div class="status-container">
-
-            @if (livro.status === 'DISPONIVEL') {
-
-              <span class="status disponivel">
-                Disponível
-              </span>
-
-            } @else {
-
-              <span class="status emprestado">
-                Emprestado
-              </span>
-
-            }
-
-          </div>
-
-        </mat-card-content>
-
-        <mat-card-actions>
-
-          @if (livro.status === 'DISPONIVEL') {
-
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="emprestar(livro.id)">
-
-              Emprestar
-
-            </button>
-
-          } @else {
-
-            <button
-              mat-raised-button
-              disabled>
-
-              Indisponível
-
-            </button>
-
-          }
-
-        </mat-card-actions>
-
-      </mat-card>
-
+    @if (livrosFiltrados().length === 0) {
+    <p class="sem-resultados">
+      Nenhum livro encontrado.
+    </p>
     }
+    @for (livro of livrosFiltrados(); track livro.id) {
+    <mat-card class="card-livro">
+      <mat-card-title>
+        {{ livro.titulo }}
+      </mat-card-title>
 
+      <mat-card-content>
+        <p><strong>Autor:</strong> {{ livro.autor }}</p>
+        <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+        <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
+        <p><strong>Páginas:</strong> {{ livro.numPaginas }}</p>
+        <p><strong>Publicação:</strong> {{ livro.anoDePublicacao | dataBr }}</p>
+
+        <div class="status-container">
+          @if (livro.status === 'DISPONIVEL') {
+          <span class="status disponivel">
+            Disponível
+          </span>
+          } @else {
+          <span class="status emprestado">
+            Emprestado
+          </span>
+          }
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        @if (livro.status === 'DISPONIVEL') {
+        <button mat-raised-button color="primary" (click)="emprestar(livro.id)">
+          Emprestar
+        </button>
+        } @else {
+        <button mat-raised-button disabled>
+          Indisponível
+        </button>
+        }
+      </mat-card-actions>
+    </mat-card>
+    }
   </div>
 </div>

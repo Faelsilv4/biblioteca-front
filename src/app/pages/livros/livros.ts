@@ -2,10 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { LivroService } from '../../services/livro.service';
 import { Navbar } from '../../components/navbar/navbar';
 import { EmprestimoService } from '../../services/emprestimo.service';
+import { FormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { DataBrPipe } from '../../pipes/data-br-pipe';
 
@@ -15,7 +18,11 @@ import { DataBrPipe } from '../../pipes/data-br-pipe';
     Navbar,
     MatCardModule,
     MatButtonModule,
-    DataBrPipe
+    DataBrPipe,
+
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule
   ],
   templateUrl: './livros.html',
   styleUrl: './livros.css',
@@ -58,4 +65,20 @@ export class Livros implements OnInit {
       }
     });
   }
+
+  filtro = '';
+  livrosFiltrados() {
+  const texto = this.filtro.toLowerCase().trim();
+
+  if (!texto) {
+    return this.livroService.listar()();
+  }
+
+  return this.livroService.listar()().filter(livro =>
+    livro.titulo.toLowerCase().includes(texto) ||
+    livro.autor.toLowerCase().includes(texto) ||
+    livro.genero.toLowerCase().includes(texto) ||
+    livro.categoria.toLowerCase().includes(texto)
+  );
+}
 }

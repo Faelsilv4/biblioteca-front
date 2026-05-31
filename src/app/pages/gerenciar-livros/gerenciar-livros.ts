@@ -120,6 +120,12 @@ export class GerenciarLivros implements OnInit {
   }
 
   removerLivro(id: number): void {
+    const confirmar = confirm('Tem certeza que deseja remover este livro?');
+
+    if (!confirmar) {
+      return;
+    }
+
     this.livroService.removerLivro(id).subscribe({
       next: () => {
         this.snackBar.open('Livro removido com sucesso!', 'Fechar', {
