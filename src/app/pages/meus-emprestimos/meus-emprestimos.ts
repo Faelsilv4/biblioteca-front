@@ -6,12 +6,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { DataBrPipe } from '../../pipes/data-br-pipe';
+
 @Component({
   selector: 'app-meus-emprestimos',
   imports: [
     Navbar,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    DataBrPipe
   ],
   templateUrl: './meus-emprestimos.html',
   styleUrl: './meus-emprestimos.css',

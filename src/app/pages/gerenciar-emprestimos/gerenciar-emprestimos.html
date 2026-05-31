@@ -21,12 +21,12 @@
         <mat-card-content>
           <p><strong>Aluno:</strong> {{ emprestimo.usuario.nome }}</p>
           <p><strong>Email:</strong> {{ emprestimo.usuario.email }}</p>
-          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo }}</p>
+          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
 
           <p>
             <strong>Data da Devolução:</strong>
             @if (emprestimo.dataDevolucao) {
-              {{ emprestimo.dataDevolucao }}
+              {{ emprestimo.dataDevolucao | dataBr }}
             } @else {
               Ainda não devolvido
             }

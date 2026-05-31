@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-gerenciar-livros',
@@ -18,7 +20,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './gerenciar-livros.html',
   styleUrl: './gerenciar-livros.css',

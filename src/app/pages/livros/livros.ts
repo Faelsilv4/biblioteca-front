@@ -7,12 +7,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { DataBrPipe } from '../../pipes/data-br-pipe';
+
 @Component({
   selector: 'app-livros',
   imports: [
     Navbar,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    DataBrPipe
   ],
   templateUrl: './livros.html',
   styleUrl: './livros.css',

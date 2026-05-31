@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { EmprestimoAdmin } from '../../models/emprestimo-admin.model';
+import { DataBrPipe } from '../../pipes/data-br-pipe';
 
 import { MatCardModule } from '@angular/material/card';
 
@@ -10,7 +11,8 @@ import { MatCardModule } from '@angular/material/card';
   selector: 'app-gerenciar-emprestimos',
   imports: [
     Navbar,
-    MatCardModule
+    MatCardModule,
+    DataBrPipe
   ],
   templateUrl: './gerenciar-emprestimos.html',
   styleUrl: './gerenciar-emprestimos.css',
