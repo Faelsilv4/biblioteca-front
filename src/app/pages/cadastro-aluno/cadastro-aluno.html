@@ -1,1 +1,61 @@
-<p>cadastro-aluno works!</p>
+<div class="container">
+  <mat-card class="card-cadastro">
+    <mat-card-title>
+      Cadastro de Aluno
+    </mat-card-title>
+
+    <form (ngSubmit)="cadastrar()" class="formulario">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          type="text"
+          name="nome"
+          [(ngModel)]="aluno.nome"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="aluno.email"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          type="password"
+          name="senha"
+          [(ngModel)]="aluno.senha"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Matrícula</mat-label>
+        <input
+          matInput
+          type="number"
+          name="matricula"
+          [(ngModel)]="aluno.matricula"
+          required
+        />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Cadastrar
+      </button>
+
+      <a routerLink="/">
+        Já tenho conta
+      </a>
+    </form>
+  </mat-card>
+</div>

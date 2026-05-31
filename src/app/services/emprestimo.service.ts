@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Emprestimo } from '../models/emprestimo.model';
 import { Observable } from 'rxjs';
 
+import { EmprestimoAdmin } from '../models/emprestimo-admin.model';
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -54,6 +57,11 @@ export class EmprestimoService {
     return this.http.post(
       `${this.apiUrl}/devolver/${emprestimoId}`,
       {}
+    );
+  }
+  listarTodosEmprestimos(): Observable<EmprestimoAdmin[]> {
+    return this.http.get<EmprestimoAdmin[]>(
+      `${this.apiUrl}/todos`
     );
   }
 }

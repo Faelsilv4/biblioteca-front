@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h1>Gerenciar Empréstimos</h1>
+
+  @if (carregando()) {
+    <p>Carregando empréstimos...</p>
+  }
+
+  @if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  }
+
+  <div class="grid-emprestimos">
+    @for (emprestimo of emprestimos(); track emprestimo.id) {
+      <mat-card class="card-emprestimo">
+        <mat-card-title>
+          {{ emprestimo.livro.titulo }}
+        </mat-card-title>
+
+        <mat-card-content>
+          <p><strong>Aluno:</strong> {{ emprestimo.usuario.nome }}</p>
+          <p><strong>Email:</strong> {{ emprestimo.usuario.email }}</p>
+          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo }}</p>
+
+          <p>
+            <strong>Data da Devolução:</strong>
+            @if (emprestimo.dataDevolucao) {
+              {{ emprestimo.dataDevolucao }}
+            } @else {
+              Ainda não devolvido
+            }
+          </p>
+
+          <p><strong>Status do Livro:</strong> {{ emprestimo.livro.status }}</p>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

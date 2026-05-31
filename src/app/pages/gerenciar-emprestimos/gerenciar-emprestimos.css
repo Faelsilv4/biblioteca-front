@@ -1,0 +1,41 @@
+.container {
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  padding: 32px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 32px;
+}
+
+.grid-emprestimos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.card-emprestimo {
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.card-emprestimo:hover {
+  transform: translateY(-3px);
+}
+
+mat-card-title {
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.card-emprestimo p {
+  margin: 8px 0;
+}
+
+.erro {
+  color: red;
+  text-align: center;
+}

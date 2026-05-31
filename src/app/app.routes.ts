@@ -5,43 +5,47 @@ import { CadastroAluno } from './pages/cadastro-aluno/cadastro-aluno';
 import { Livros } from './pages/livros/livros';
 import { MeusEmprestimos } from './pages/meus-emprestimos/meus-emprestimos';
 import { Perfil } from './pages/perfil/perfil';
+import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
+import { GerenciarEmprestimos } from './pages/gerenciar-emprestimos/gerenciar-emprestimos';
 
 import { authGuard } from './guards/auth-guard';
-import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: Login
-    },
-    {
-        path: 'cadastro-aluno',
-        component: CadastroAluno
-    },
-    {
-        path: 'livros',
-        component: Livros,
-        canActivate: [authGuard]
-
-    },
- 
-    {
-        path: 'meus-emprestimos',
-        component: MeusEmprestimos,
-        canActivate: [authGuard]
-    },
-    {
-        path: 'perfil',
-        component: Perfil,
-        canActivate: [authGuard]
-    },
-       {
-        path: 'gerenciar-livros',
-        component: GerenciarLivros,
-        canActivate: [authGuard]
-    },
-    {
-        path: '**',
-        redirectTo: ''
-    }
+  {
+    path: '',
+    component: Login
+  },
+  {
+    path: 'cadastro-aluno',
+    component: CadastroAluno
+  },
+  {
+    path: 'livros',
+    component: Livros,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'meus-emprestimos',
+    component: MeusEmprestimos,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'perfil',
+    component: Perfil,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'gerenciar-livros',
+    component: GerenciarLivros,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'gerenciar-emprestimos',
+    component: GerenciarEmprestimos,
+    canActivate: [authGuard]
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];

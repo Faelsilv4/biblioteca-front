@@ -10,6 +10,20 @@ interface AuthResponse {
   nome: string;
 }
 
+interface RegistroAlunoRequest {
+  nome: string;
+  email: string;
+  senha: string;
+  matricula: number;
+}
+
+interface RegistroResponse {
+  id: number;
+  nome: string;
+  email: string;
+  mensagem: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +41,13 @@ export class AuthService {
           localStorage.setItem('nome', resposta.nome);
         })
       );
+  }
+
+  cadastrarAluno(dados: RegistroAlunoRequest): Observable<RegistroResponse> {
+    return this.http.post<RegistroResponse>(
+      `${this.apiUrl}/register/aluno`,
+      dados
+    );
   }
 
   logout(): void {
