@@ -59,3 +59,32 @@ mat-card-actions {
   justify-content: flex-end;
   padding: 10px 0 0;
 }
+.btn-cancelar {
+  grid-column: 1 / -1;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.acoes-formulario {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.acoes-formulario button {
+  min-width: 180px;
+  height: 42px;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}

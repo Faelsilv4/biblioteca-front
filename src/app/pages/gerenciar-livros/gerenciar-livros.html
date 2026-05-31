@@ -1,76 +1,99 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-    <h1>Gerenciar Livros</h1>
+  <h1>Gerenciar Livros</h1>
 
-    <mat-card class="form-card">
-        <mat-card-title>Cadastrar novo livro</mat-card-title>
+  <mat-card class="form-card">
+    <mat-card-title>
+      @if (livroEditandoId) {
+        Editar livro
+      } @else {
+        Cadastrar novo livro
+      }
+    </mat-card-title>
 
-        <form (ngSubmit)="cadastrarLivro()" class="form-grid">
+    <form (ngSubmit)="salvarLivro()" class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput type="text" name="titulo" [(ngModel)]="novoLivro.titulo" required>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Título</mat-label>
-                <input matInput type="text" name="titulo" [(ngModel)]="novoLivro.titulo" required>
-            </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Autor</mat-label>
+        <input matInput type="text" name="autor" [(ngModel)]="novoLivro.autor" required>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Autor</mat-label>
-                <input matInput type="text" name="autor" [(ngModel)]="novoLivro.autor" required>
-            </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Gênero</mat-label>
+        <input matInput type="text" name="genero" [(ngModel)]="novoLivro.genero" required>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Gênero</mat-label>
-                <input matInput type="text" name="genero" [(ngModel)]="novoLivro.genero" required>
-            </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número de páginas</mat-label>
+        <input matInput type="number" name="numPaginas" [(ngModel)]="novoLivro.numPaginas" required>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Número de páginas</mat-label>
-                <input matInput type="number" name="numPaginas" [(ngModel)]="novoLivro.numPaginas" required>
-            </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Data de publicação</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerPublicacao"
+          name="anoDePublicacao"
+          [(ngModel)]="novoLivro.anoDePublicacao"
+          required
+        >
 
-            <mat-form-field appearance="outline">
-                <mat-label>Data de publicação</mat-label>
+        <mat-datepicker-toggle matIconSuffix [for]="pickerPublicacao"></mat-datepicker-toggle>
+        <mat-datepicker #pickerPublicacao></mat-datepicker>
+      </mat-form-field>
 
-                <input matInput [matDatepicker]="pickerPublicacao" name="anoDePublicacao"
-                    [(ngModel)]="novoLivro.anoDePublicacao" required>
+      <mat-form-field appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <input matInput type="text" name="categoria" [(ngModel)]="novoLivro.categoria" required>
+      </mat-form-field>
 
-                <mat-datepicker-toggle matIconSuffix [for]="pickerPublicacao">
-                </mat-datepicker-toggle>
+      <div class="acoes-formulario">
+        <button mat-raised-button color="primary" type="submit">
+          @if (livroEditandoId) {
+            Salvar Alterações
+          } @else {
+            Cadastrar Livro
+          }
+        </button>
 
-                <mat-datepicker #pickerPublicacao></mat-datepicker>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Categoria</mat-label>
-                <input matInput type="text" name="categoria" [(ngModel)]="novoLivro.categoria" required>
-            </mat-form-field>
-
-            <button mat-raised-button color="primary" type="submit" class="btn-cadastrar">
-                Cadastrar Livro
-            </button>
-        </form>
-    </mat-card>
-
-    <h2>Livros cadastrados</h2>
-
-    <div class="grid-livros">
-        @for (livro of livros(); track livro.id) {
-        <mat-card class="card-livro">
-            <mat-card-title>{{ livro.titulo }}</mat-card-title>
-
-            <mat-card-content>
-                <p><strong>Autor:</strong> {{ livro.autor }}</p>
-                <p><strong>Gênero:</strong> {{ livro.genero }}</p>
-                <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
-                <p><strong>Status:</strong> {{ livro.status }}</p>
-            </mat-card-content>
-
-            <mat-card-actions>
-                <button mat-raised-button color="warn" (click)="removerLivro(livro.id)">
-                    Remover
-                </button>
-            </mat-card-actions>
-        </mat-card>
+        @if (livroEditandoId) {
+          <button mat-stroked-button type="button" (click)="cancelarEdicao()">
+            Cancelar Edição
+          </button>
         }
-    </div>
+      </div>
+    </form>
+  </mat-card>
+
+  <h2>Livros cadastrados</h2>
+
+  <div class="grid-livros">
+    @for (livro of livros(); track livro.id) {
+      <mat-card class="card-livro">
+        <mat-card-title>{{ livro.titulo }}</mat-card-title>
+
+        <mat-card-content>
+          <p><strong>Autor:</strong> {{ livro.autor }}</p>
+          <p><strong>Gênero:</strong> {{ livro.genero }}</p>
+          <p><strong>Categoria:</strong> {{ livro.categoria }}</p>
+          <p><strong>Status:</strong> {{ livro.status }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="editarLivro(livro)">
+            Editar
+          </button>
+
+          <button mat-raised-button color="warn" (click)="removerLivro(livro.id)">
+            Remover
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
 </div>

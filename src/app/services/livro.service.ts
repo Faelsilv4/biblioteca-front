@@ -49,6 +49,13 @@ export class LivroService {
     });
   }
 
+  atualizarLivro(id: number, livro: Omit<Livro, 'id' | 'status'>): Observable<Livro> {
+    return this.http.put<Livro>(
+      `${this.apiUrl}/${id}`,
+      livro
+    );
+  }
+
   removerLivro(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

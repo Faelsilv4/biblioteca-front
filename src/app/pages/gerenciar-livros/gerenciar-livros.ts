@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 
 import { Navbar } from '../../components/navbar/navbar';
 import { LivroService } from '../../services/livro.service';
+import { Livro } from '../../models/livro.model';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,6 +34,8 @@ export class GerenciarLivros implements OnInit {
 
   livros = this.livroService.listar();
 
+  livroEditandoId: number | null = null;
+
   novoLivro = {
     titulo: '',
     autor: '',
@@ -46,6 +49,14 @@ export class GerenciarLivros implements OnInit {
     this.livroService.carregar();
   }
 
+  salvarLivro(): void {
+    if (this.livroEditandoId) {
+      this.atualizarLivro();
+    } else {
+      this.cadastrarLivro();
+    }
+  }
+
   cadastrarLivro(): void {
     this.livroService.cadastrarLivro(this.novoLivro).subscribe({
       next: () => {
@@ -54,15 +65,7 @@ export class GerenciarLivros implements OnInit {
         });
 
         this.livroService.carregar();
-
-        this.novoLivro = {
-          titulo: '',
-          autor: '',
-          genero: '',
-          numPaginas: 0,
-          anoDePublicacao: '',
-          categoria: ''
-        };
+        this.limparFormulario();
       },
       error: () => {
         this.snackBar.open('Não foi possível cadastrar o livro.', 'Fechar', {
@@ -70,6 +73,50 @@ export class GerenciarLivros implements OnInit {
         });
       }
     });
+  }
+
+  editarLivro(livro: Livro): void {
+    this.livroEditandoId = livro.id;
+
+    this.novoLivro = {
+      titulo: livro.titulo,
+      autor: livro.autor,
+      genero: livro.genero,
+      numPaginas: livro.numPaginas,
+      anoDePublicacao: livro.anoDePublicacao,
+      categoria: livro.categoria
+    };
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  atualizarLivro(): void {
+    if (!this.livroEditandoId) {
+      return;
+    }
+
+    this.livroService.atualizarLivro(this.livroEditandoId, this.novoLivro).subscribe({
+      next: () => {
+        this.snackBar.open('Livro atualizado com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+
+        this.livroService.carregar();
+        this.limparFormulario();
+      },
+      error: () => {
+        this.snackBar.open('Não foi possível atualizar o livro.', 'Fechar', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  cancelarEdicao(): void {
+    this.limparFormulario();
   }
 
   removerLivro(id: number): void {
@@ -87,5 +134,18 @@ export class GerenciarLivros implements OnInit {
         });
       }
     });
+  }
+
+  private limparFormulario(): void {
+    this.livroEditandoId = null;
+
+    this.novoLivro = {
+      titulo: '',
+      autor: '',
+      genero: '',
+      numPaginas: 0,
+      anoDePublicacao: '',
+      categoria: ''
+    };
   }
 }
