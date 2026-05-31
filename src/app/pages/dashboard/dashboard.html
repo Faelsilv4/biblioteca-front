@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <h1>Dashboard da Biblioteca</h1>
+
+  <div class="cards-dashboard">
+
+    <mat-card class="card-dashboard">
+      <mat-card-title>📚 Total de Livros</mat-card-title>
+      <mat-card-content>
+        <p>{{ dashboard().totalLivros }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card-dashboard">
+      <mat-card-title>📗 Livros Disponíveis</mat-card-title>
+      <mat-card-content>
+        <p>{{ dashboard().livrosDisponiveis }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card-dashboard">
+      <mat-card-title>📕 Livros Emprestados</mat-card-title>
+      <mat-card-content>
+        <p>{{ dashboard().livrosEmprestados }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card-dashboard">
+      <mat-card-title>🔄 Total de Empréstimos</mat-card-title>
+      <mat-card-content>
+        <p>{{ dashboard().totalEmprestimos }}</p>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

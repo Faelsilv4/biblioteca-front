@@ -1,28 +1,24 @@
 <nav class="navbar">
 
     <div class="logo">
-        Biblioteca APS
+        Biblioteca
     </div>
 
     <div class="menu">
         <a routerLink="/livros">Livros</a>
 
         @if (ehAluno()) {
-            <a routerLink="/meus-emprestimos">
-                Meus Empréstimos
-            </a>
+        <a routerLink="/meus-emprestimos">
+            Meus Empréstimos
+        </a>
         }
 
         <a routerLink="/perfil">Perfil</a>
 
         @if (ehBibliotecario()) {
-            <a routerLink="/gerenciar-livros">
-                Gerenciar Livros
-            </a>
-
-            <a routerLink="/gerenciar-emprestimos">
-                Empréstimos
-            </a>
+        <a routerLink="/gerenciar-livros">Gerenciar Livros</a>
+        <a routerLink="/gerenciar-emprestimos">Empréstimos</a>
+        <a routerLink="/dashboard">Dashboard</a>
         }
     </div>
 

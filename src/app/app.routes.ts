@@ -8,6 +8,7 @@ import { Perfil } from './pages/perfil/perfil';
 import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
 import { GerenciarEmprestimos } from './pages/gerenciar-emprestimos/gerenciar-emprestimos';
 import { CadastroBibliotecario } from './pages/cadastro-bibliotecario/cadastro-bibliotecario';
+import { Dashboard } from './pages/dashboard/dashboard';
 
 import { authGuard } from './guards/auth-guard';
 
@@ -48,6 +49,11 @@ export const routes: Routes = [
     {
         path: 'cadastro-bibliotecario',
         component: CadastroBibliotecario
+    },
+    {
+        path: 'dashboard',
+        component: Dashboard,
+        canActivate: [authGuard]
     },
     {
         path: '**',
