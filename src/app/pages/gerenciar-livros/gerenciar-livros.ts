@@ -154,4 +154,21 @@ export class GerenciarLivros implements OnInit {
       categoria: ''
     };
   }
+
+  filtro = '';
+
+  livrosFiltrados() {
+    const texto = this.filtro.toLowerCase().trim();
+
+    if (!texto) {
+      return this.livros();
+    }
+
+    return this.livros().filter(livro =>
+      livro.titulo.toLowerCase().includes(texto) ||
+      livro.autor.toLowerCase().includes(texto) ||
+      livro.genero.toLowerCase().includes(texto) ||
+      livro.categoria.toLowerCase().includes(texto)
+    );
+  }
 }

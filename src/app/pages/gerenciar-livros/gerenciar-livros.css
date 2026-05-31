@@ -88,3 +88,17 @@ mat-card-actions {
   gap: 10px;
   justify-content: flex-end;
 }
+
+.campo-pesquisa {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.sem-resultados {
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #666;
+}

@@ -2,39 +2,50 @@
 
 <div class="container">
   <h1>Gerenciar Empréstimos</h1>
+  <mat-form-field appearance="outline" class="campo-pesquisa">
+    <mat-label>Pesquisar empréstimo</mat-label>
+
+    <input matInput type="text" name="filtro" [(ngModel)]="filtro" placeholder="Aluno, email ou livro" />
+  </mat-form-field>
 
   @if (carregando()) {
-    <p>Carregando empréstimos...</p>
+  <p>Carregando empréstimos...</p>
   }
 
   @if (erro()) {
-    <p class="erro">{{ erro() }}</p>
+  <p class="erro">{{ erro() }}</p>
   }
 
+  @if (!carregando() && emprestimosFiltrados().length === 0) {
+  <p class="sem-resultados">
+    Nenhum empréstimo encontrado.
+  </p>
+}
+
   <div class="grid-emprestimos">
-    @for (emprestimo of emprestimos(); track emprestimo.id) {
-      <mat-card class="card-emprestimo">
-        <mat-card-title>
-          {{ emprestimo.livro.titulo }}
-        </mat-card-title>
+    @for (emprestimo of emprestimosFiltrados(); track emprestimo.id) {
+    <mat-card class="card-emprestimo">
+      <mat-card-title>
+        {{ emprestimo.livro.titulo }}
+      </mat-card-title>
 
-        <mat-card-content>
-          <p><strong>Aluno:</strong> {{ emprestimo.usuario.nome }}</p>
-          <p><strong>Email:</strong> {{ emprestimo.usuario.email }}</p>
-          <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
+      <mat-card-content>
+        <p><strong>Aluno:</strong> {{ emprestimo.usuario.nome }}</p>
+        <p><strong>Email:</strong> {{ emprestimo.usuario.email }}</p>
+        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
 
-          <p>
-            <strong>Data da Devolução:</strong>
-            @if (emprestimo.dataDevolucao) {
-              {{ emprestimo.dataDevolucao | dataBr }}
-            } @else {
-              Ainda não devolvido
-            }
-          </p>
+        <p>
+          <strong>Data da Devolução:</strong>
+          @if (emprestimo.dataDevolucao) {
+          {{ emprestimo.dataDevolucao | dataBr }}
+          } @else {
+          Ainda não devolvido
+          }
+        </p>
 
-          <p><strong>Status do Livro:</strong> {{ emprestimo.livro.status }}</p>
-        </mat-card-content>
-      </mat-card>
+        <p><strong>Status do Livro:</strong> {{ emprestimo.livro.status }}</p>
+      </mat-card-content>
+    </mat-card>
     }
   </div>
 </div>

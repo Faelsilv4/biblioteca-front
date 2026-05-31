@@ -39,3 +39,17 @@ mat-card-title {
   color: red;
   text-align: center;
 }
+
+.campo-pesquisa {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.sem-resultados {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  color: #666;
+}
