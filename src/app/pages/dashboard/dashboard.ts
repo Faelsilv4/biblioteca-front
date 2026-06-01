@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
 
 import { MatCardModule } from '@angular/material/card';
 
+import { MatIconModule } from '@angular/material/icon';
+
+
 interface DashboardResponse {
   totalLivros: number;
   livrosDisponiveis: number;
@@ -19,7 +22,8 @@ interface DashboardResponse {
   selector: 'app-dashboard',
   imports: [
     Navbar,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',

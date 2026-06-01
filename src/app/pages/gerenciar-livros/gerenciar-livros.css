@@ -1,72 +1,67 @@
 .container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 0 20px;
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  padding: 32px;
 }
 
-h1 {
+.cabecalho {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 2rem;
+  margin-bottom: 28px;
 }
 
-h2 {
-  margin: 30px 0 20px;
+.cabecalho h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.cabecalho h1 mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.cabecalho p {
+  color: #666;
+  font-size: 17px;
 }
 
 .form-card {
-  padding: 20px;
+  padding: 26px;
+  border-radius: 16px;
+  border-top: 6px solid #1976d2;
   margin-bottom: 40px;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.titulo-formulario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 22px;
+  margin-bottom: 22px;
+}
+
+.titulo-formulario mat-icon {
+  color: #1976d2;
 }
 
 .form-grid {
-  justify-items: center;
-}
-
-.btn-cadastrar {
-    width: 250px;
-  margin: 20px auto 0;
-}
-
-.grid-livros {
- display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
-}
-
-.card-livro {
-  padding: 20px;
-  border-radius: 12px;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
-}
-
-.card-livro:hover {
-  transform: translateY(-4px);
-}
-
-mat-card-title {
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-mat-card-content p {
-  margin: 8px 0;
-}
-
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 0 0;
-}
-.btn-cancelar {
-  grid-column: 1 / -1;
-}
-
-mat-card-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
 }
 
 .acoes-formulario {
@@ -75,7 +70,7 @@ mat-card-actions {
   gap: 12px;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 14px;
 }
 
 .acoes-formulario button {
@@ -83,20 +78,122 @@ mat-card-actions {
   height: 42px;
 }
 
-mat-card-actions {
+.secao-lista {
+  margin-bottom: 24px;
+}
+
+.secao-lista h2 {
   display: flex;
+  align-items: center;
   gap: 10px;
-  justify-content: flex-end;
+
+  font-size: 26px;
+  margin-bottom: 18px;
+}
+
+.secao-lista h2 mat-icon {
+  color: #1976d2;
 }
 
 .campo-pesquisa {
   width: 100%;
-  max-width: 500px;
-  margin-bottom: 20px;
+  max-width: 520px;
+}
+
+.grid-livros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+.card-livro {
+  padding: 22px;
+  border-radius: 16px;
+  border-top: 6px solid #1976d2;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-livro:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 21px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+mat-card-title mat-icon {
+  color: #1976d2;
+}
+
+mat-card-content {
+  flex: 1;
+}
+
+.info-livro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.info-livro mat-icon {
+  color: #1976d2;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.info-livro p {
+  margin: 0;
+}
+
+.info-livro span {
+  margin-left: 6px;
+  color: #333;
+  font-weight: 500;
+}
+
+.status-container {
+  margin-top: 18px;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.disponivel {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.emprestado {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 18px;
 }
 
 .sem-resultados {
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: center;
   font-size: 18px;
   margin-top: 20px;

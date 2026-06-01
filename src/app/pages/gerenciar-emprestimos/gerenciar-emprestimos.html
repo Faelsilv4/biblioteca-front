@@ -1,7 +1,14 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Gerenciar Empréstimos</h1>
+  <div class="cabecalho">
+    <h1>
+      <mat-icon>assignment</mat-icon>
+      Gerenciar Empréstimos
+    </h1>
+    <p>Acompanhe os empréstimos realizados pelos alunos.</p>
+  </div>
+
   <mat-form-field appearance="outline" class="campo-pesquisa">
     <mat-label>Pesquisar empréstimo</mat-label>
 
@@ -9,41 +16,78 @@
   </mat-form-field>
 
   @if (carregando()) {
-  <p>Carregando empréstimos...</p>
+  <p class="mensagem">Carregando empréstimos...</p>
   }
 
   @if (erro()) {
   <p class="erro">{{ erro() }}</p>
   }
 
-  @if (!carregando() && emprestimosFiltrados().length === 0) {
-  <p class="sem-resultados">
-    Nenhum empréstimo encontrado.
-  </p>
-}
-
   <div class="grid-emprestimos">
+    @if (!carregando() && emprestimosFiltrados().length === 0) {
+    <p class="sem-resultados">
+      Nenhum empréstimo encontrado.
+    </p>
+    }
+
     @for (emprestimo of emprestimosFiltrados(); track emprestimo.id) {
     <mat-card class="card-emprestimo">
+
       <mat-card-title>
+        <mat-icon>auto_stories</mat-icon>
         {{ emprestimo.livro.titulo }}
       </mat-card-title>
 
       <mat-card-content>
-        <p><strong>Aluno:</strong> {{ emprestimo.usuario.nome }}</p>
-        <p><strong>Email:</strong> {{ emprestimo.usuario.email }}</p>
-        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
 
-        <p>
-          <strong>Data da Devolução:</strong>
+        <div class="info-emprestimo">
+          <mat-icon>person</mat-icon>
+          <p>
+            <strong>Aluno:</strong>
+            <span>{{ emprestimo.usuario.nome }}</span>
+          </p>
+        </div>
+
+        <div class="info-emprestimo">
+          <mat-icon>email</mat-icon>
+          <p>
+            <strong>Email:</strong>
+            <span>{{ emprestimo.usuario.email }}</span>
+          </p>
+        </div>
+
+        <div class="info-emprestimo">
+          <mat-icon>event</mat-icon>
+          <p>
+            <strong>Data do Empréstimo:</strong>
+            <span>{{ emprestimo.dataEmprestimo | dataBr }}</span>
+          </p>
+        </div>
+
+        <div class="info-emprestimo">
+          <mat-icon>event_available</mat-icon>
+          <p>
+            <strong>Data da Devolução:</strong>
+            @if (emprestimo.dataDevolucao) {
+            <span>{{ emprestimo.dataDevolucao | dataBr }}</span>
+            } @else {
+            <span>Ainda não devolvido</span>
+            }
+          </p>
+        </div>
+
+        <div class="status-container">
           @if (emprestimo.dataDevolucao) {
-          {{ emprestimo.dataDevolucao | dataBr }}
+          <span class="status devolvido">
+            Devolvido
+          </span>
           } @else {
-          Ainda não devolvido
+          <span class="status emprestado">
+            Emprestado
+          </span>
           }
-        </p>
+        </div>
 
-        <p><strong>Status do Livro:</strong> {{ emprestimo.livro.status }}</p>
       </mat-card-content>
     </mat-card>
     }

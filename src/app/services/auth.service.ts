@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../models/login.model';
 import { Observable, tap } from 'rxjs';
@@ -51,6 +51,8 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:8080/api/auth';
 
+  nomeUsuario = signal<string | null>(localStorage.getItem('nome'));
+
   login(dados: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, dados)
       .pipe(
@@ -59,6 +61,8 @@ export class AuthService {
           localStorage.setItem('tipoUsuario', resposta.tipoUsuario);
           localStorage.setItem('email', resposta.email);
           localStorage.setItem('nome', resposta.nome);
+
+          this.nomeUsuario.set(resposta.nome);
         })
       );
   }
@@ -71,17 +75,19 @@ export class AuthService {
   }
 
   cadastrarBibliotecario(dados: RegistroBibliotecarioRequest): Observable<RegistroResponse> {
-  return this.http.post<RegistroResponse>(
-    `${this.apiUrl}/register/bibliotecario`,
-    dados
-  );
-}
+    return this.http.post<RegistroResponse>(
+      `${this.apiUrl}/register/bibliotecario`,
+      dados
+    );
+  }
 
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('tipoUsuario');
     localStorage.removeItem('email');
     localStorage.removeItem('nome');
+
+    this.nomeUsuario.set(null);
   }
 
   estaLogado(): boolean {
@@ -107,6 +113,7 @@ export class AuthService {
     ).pipe(
       tap((resposta) => {
         localStorage.setItem('nome', resposta.nome);
+        this.nomeUsuario.set(resposta.nome);
       })
     );
   }

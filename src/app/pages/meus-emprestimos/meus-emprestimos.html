@@ -1,53 +1,78 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Meus Empréstimos</h1>
+  <div class="cabecalho">
+    <h1>
+      <mat-icon>assignment</mat-icon>
+      Meus Empréstimos
+    </h1>
+    <p>Acompanhe seus livros emprestados e devoluções.</p>
+  </div>
 
   @if (carregando()) {
-  <p>Carregando empréstimos...</p>
+    <p class="mensagem">Carregando empréstimos...</p>
   }
 
   @if (erro()) {
-  <p class="erro">{{ erro() }}</p>
+    <p class="erro">{{ erro() }}</p>
   }
 
   <div class="grid-emprestimos">
+    @if (!carregando() && emprestimos().length === 0) {
+      <p class="sem-resultados">
+        Você ainda não possui empréstimos registrados.
+      </p>
+    }
+
     @for (emprestimo of emprestimos(); track emprestimo.id) {
-    <mat-card class="card-emprestimo">
-      <mat-card-title>
-        {{ emprestimo.nomeLivro }}
-      </mat-card-title>
+      <mat-card class="card-emprestimo">
 
-      <mat-card-content>
-        
-        <p><strong>Data do Empréstimo:</strong> {{ emprestimo.dataEmprestimo | dataBr }}</p>
+        <mat-card-title>
+          <mat-icon>auto_stories</mat-icon>
+          {{ emprestimo.nomeLivro }}
+        </mat-card-title>
 
-        <p>
-          <strong>Data da Devolução:</strong>
-          @if (emprestimo.dataDevolucao) {
-          {{ emprestimo.dataDevolucao | dataBr }}
-          } @else {
-          Ainda não devolvido
-          }
-        </p>
+        <mat-card-content>
 
-        <div class="status-container">
+          <div class="info-emprestimo">
+            <mat-icon>event</mat-icon>
+            <p>
+              <strong>Data do Empréstimo:</strong>
+              <span>{{ emprestimo.dataEmprestimo | dataBr }}</span>
+            </p>
+          </div>
+
+          <div class="info-emprestimo">
+            <mat-icon>event_available</mat-icon>
+            <p>
+              <strong>Data da Devolução:</strong>
+              @if (emprestimo.dataDevolucao) {
+                <span>{{ emprestimo.dataDevolucao | dataBr }}</span>
+              } @else {
+                <span>Ainda não devolvido</span>
+              }
+            </p>
+          </div>
+
+          <div class="status-container">
+            @if (!emprestimo.dataDevolucao) {
+              <span class="status emprestado">Emprestado</span>
+            } @else {
+              <span class="status devolvido">Devolvido</span>
+            }
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
           @if (!emprestimo.dataDevolucao) {
-          <span class="status emprestado">Emprestado</span>
-          } @else {
-          <span class="status devolvido">Devolvido</span>
+            <button mat-raised-button color="primary" (click)="devolver(emprestimo.id)">
+              Devolver
+            </button>
           }
-        </div>
-      </mat-card-content>
+        </mat-card-actions>
 
-      <mat-card-actions>
-        @if (!emprestimo.dataDevolucao) {
-        <button mat-raised-button color="primary" (click)="devolver(emprestimo.id)">
-          Devolver
-        </button>
-        }
-      </mat-card-actions>
-    </mat-card>
+      </mat-card>
     }
   </div>
 </div>

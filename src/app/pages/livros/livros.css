@@ -4,45 +4,111 @@
   padding: 32px;
 }
 
-h1 {
+.cabecalho {
   text-align: center;
-  margin-bottom: 32px;
-  font-size: 32px;
+  margin-bottom: 28px;
+}
+
+.cabecalho h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.cabecalho h1 mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.cabecalho p {
+  color: #666;
+  font-size: 17px;
+}
+
+.campo-pesquisa {
+  width: 100%;
+  max-width: 520px;
+  display: block;
+  margin: 0 auto 28px auto;
 }
 
 .grid-livros {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
 
 .card-livro {
-  padding: 20px;
-  border-radius: 12px;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  padding: 22px;
+  border-radius: 16px;
+  border-top: 6px solid #1976d2;
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
+
+.card-livro:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 21px;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+mat-card-title mat-icon {
+  color: #1976d2;
+}
+
 mat-card-content {
   flex: 1;
 }
-.card-livro:hover {
-  transform: translateY(-3px);
+
+.info-livro {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
-mat-card-title { 
+.info-livro mat-icon {
+  color: #1976d2;
   font-size: 22px;
-  margin-bottom: 16px;
+  width: 22px;
+  height: 22px;
 }
 
-.card-livro p {
-  margin: 8px 0;
+.info-livro p {
+  margin: 0;
+}
+
+.info-livro span {
+  margin-left: 6px;
+  color: #333;
+  font-weight: 500;
 }
 
 .status-container {
-  margin-top: 15px;
+  margin-top: 18px;
 }
 
 .status {
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-weight: 600;
   font-size: 14px;
@@ -61,13 +127,18 @@ mat-card-title {
 mat-card-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 15px;
+  margin-top: 18px;
 }
 
 .sem-resultados {
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: center;
   font-size: 18px;
   margin-top: 20px;
   color: #666;
+}
+
+.erro {
+  text-align: center;
+  color: red;
 }

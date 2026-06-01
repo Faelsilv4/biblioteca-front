@@ -14,6 +14,13 @@
   padding: 28px;
   border-radius: 12px;
   margin-top: 40px;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-perfil:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 mat-card-title {
@@ -22,13 +29,41 @@ mat-card-title {
   margin-bottom: 24px;
 }
 
-mat-card-content p {
+.titulo-perfil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.titulo-perfil mat-icon {
+  font-size: 42px;
+  width: 42px;
+  height: 42px;
+  color: #1976d2;
+}
+
+.info-perfil {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.info-perfil p {
+  margin: 0;
   font-size: 18px;
-  margin: 16px 0;
+}
+
+.info-perfil mat-icon {
+  color: #1976d2;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 hr {
-  margin: 24px 0;
+  margin: 30px 0;
 }
 
 h3 {
@@ -38,4 +73,38 @@ h3 {
 .campo {
   width: 100%;
   margin-bottom: 16px;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.info-perfil span {
+  font-weight: 500;
+  color: #333;
+}
+
+.acoes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.info-perfil span {
+  font-weight: 500;
+  color: #333;
+}
+
+.valor {
+  margin-left: 8px;
 }

@@ -12,6 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gerenciar-livros',
@@ -23,7 +30,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './gerenciar-livros.html',
   styleUrl: './gerenciar-livros.css',
@@ -31,10 +40,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class GerenciarLivros implements OnInit {
   private readonly livroService = inject(LivroService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
 
   livros = this.livroService.listar();
 
   livroEditandoId: number | null = null;
+  filtro = '';
 
   novoLivro = {
     titulo: '',
@@ -119,27 +130,65 @@ export class GerenciarLivros implements OnInit {
     this.limparFormulario();
   }
 
-  removerLivro(id: number): void {
-    const confirmar = confirm('Tem certeza que deseja remover este livro?');
+  removerLivro(livro: Livro): void {
+    const status = livro.status?.toString().toUpperCase();
 
-    if (!confirmar) {
+    if (status !== 'DISPONIVEL') {
+      this.snackBar.open(
+        'Não é possível remover este livro, pois ele está emprestado.',
+        'Fechar',
+        { duration: 4000 }
+      );
       return;
     }
 
-    this.livroService.removerLivro(id).subscribe({
-      next: () => {
-        this.snackBar.open('Livro removido com sucesso!', 'Fechar', {
-          duration: 3000
-        });
-
-        this.livroService.carregar();
-      },
-      error: () => {
-        this.snackBar.open('Não foi possível remover o livro.', 'Fechar', {
-          duration: 3000
-        });
-      }
+    const dialogRef = this.dialog.open(ConfirmarRemocaoLivroDialog, {
+      width: '390px',
+      data: livro.titulo
     });
+
+    dialogRef.afterClosed().subscribe((confirmado: boolean) => {
+      if (!confirmado) {
+        return;
+      }
+
+      this.livroService.removerLivro(livro.id).subscribe({
+        next: () => {
+          this.snackBar.open('Livro removido com sucesso!', 'Fechar', {
+            duration: 3000
+          });
+
+          this.livroService.carregar();
+        },
+        error: (erro) => {
+          console.error(erro);
+
+          const mensagem =
+            erro.error?.message ||
+            erro.error?.erro ||
+            erro.error?.mensagem ||
+            'Não foi possível remover o livro.';
+
+          this.snackBar.open(mensagem, 'Fechar', {
+            duration: 4000
+          });
+        }
+      });
+    });
+  }
+  livrosFiltrados() {
+    const texto = this.filtro.toLowerCase().trim();
+
+    if (!texto) {
+      return this.livros();
+    }
+
+    return this.livros().filter(livro =>
+      livro.titulo.toLowerCase().includes(texto) ||
+      livro.autor.toLowerCase().includes(texto) ||
+      livro.genero.toLowerCase().includes(texto) ||
+      livro.categoria.toLowerCase().includes(texto)
+    );
   }
 
   private limparFormulario(): void {
@@ -154,21 +203,60 @@ export class GerenciarLivros implements OnInit {
       categoria: ''
     };
   }
+}
 
-  filtro = '';
+@Component({
+  selector: 'app-confirmar-remocao-livro-dialog',
+  standalone: true,
+  imports: [
+    MatDialogModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  template: `
+    <h2 mat-dialog-title class="titulo-dialog">
+      <mat-icon color="warn">warning</mat-icon>
+      Confirmar remoção
+    </h2>
 
-  livrosFiltrados() {
-    const texto = this.filtro.toLowerCase().trim();
+    <mat-dialog-content>
+      <p>
+        Tem certeza que deseja remover o livro
+        <strong>{{ tituloLivro }}</strong>?
+      </p>
+    </mat-dialog-content>
 
-    if (!texto) {
-      return this.livros();
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="cancelar()">
+        Cancelar
+      </button>
+
+      <button mat-raised-button color="warn" (click)="confirmar()">
+        Remover
+      </button>
+    </mat-dialog-actions>
+  `,
+  styles: [`
+    .titulo-dialog {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    return this.livros().filter(livro =>
-      livro.titulo.toLowerCase().includes(texto) ||
-      livro.autor.toLowerCase().includes(texto) ||
-      livro.genero.toLowerCase().includes(texto) ||
-      livro.categoria.toLowerCase().includes(texto)
-    );
+    mat-dialog-content {
+      font-size: 16px;
+    }
+  `]
+})
+export class ConfirmarRemocaoLivroDialog {
+  tituloLivro = inject(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<ConfirmarRemocaoLivroDialog>);
+
+  cancelar(): void {
+    this.dialogRef.close(false);
+  }
+
+  confirmar(): void {
+    this.dialogRef.close(true);
   }
 }

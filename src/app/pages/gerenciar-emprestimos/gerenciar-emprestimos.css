@@ -4,35 +4,119 @@
   padding: 32px;
 }
 
-h1 {
+.cabecalho {
   text-align: center;
-  margin-bottom: 32px;
-  font-size: 32px;
+  margin-bottom: 28px;
+}
+
+.cabecalho h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.cabecalho h1 mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #1976d2;
+}
+
+.cabecalho p {
+  color: #666;
+  font-size: 17px;
+}
+
+.campo-pesquisa {
+  width: 100%;
+  max-width: 520px;
+  display: block;
+  margin: 0 auto 28px auto;
 }
 
 .grid-emprestimos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
 
 .card-emprestimo {
-  padding: 20px;
-  border-radius: 12px;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
+  padding: 22px;
+  border-radius: 16px;
+  border-top: 6px solid #6a1b9a;
+
+  display: flex;
+  flex-direction: column;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card-emprestimo:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   font-size: 22px;
-  margin-bottom: 16px;
+  line-height: 1.2;
+  margin-bottom: 18px;
 }
 
-.card-emprestimo p {
-  margin: 8px 0;
+mat-card-title mat-icon {
+  color: #1976d2;
+}
+
+.info-emprestimo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.info-emprestimo mat-icon {
+  color: #1976d2;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.info-emprestimo p {
+  margin: 0;
+}
+
+.info-emprestimo span {
+  margin-left: 6px;
+  color: #333;
+  font-weight: 500;
+}
+
+.status-container {
+  margin-top: 18px;
+}
+
+.status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.disponivel {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.emprestado {
+  background-color: #fff3cd;
+  color: #856404;
 }
 
 .erro {
@@ -40,16 +124,15 @@ mat-card-title {
   text-align: center;
 }
 
-.campo-pesquisa {
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 20px;
-}
-
+.mensagem,
 .sem-resultados {
-  width: 100%;
+  grid-column: 1 / -1;
   text-align: center;
-  margin-top: 20px;
   font-size: 18px;
+  margin-top: 20px;
   color: #666;
+}
+.devolvido {
+  background-color: #d4edda;
+  color: #155724;
 }

@@ -27,33 +27,45 @@
 
 .card-dashboard {
   padding: 28px;
-  border-radius: 18px;
+  border-radius: 16px;
   text-align: center;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
   border-top: 6px solid transparent;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-dashboard:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .icone {
-  font-size: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 14px;
 }
 
+.icone mat-icon {
+  font-size: 52px;
+  width: 52px;
+  height: 52px;
+}
+
 .card-dashboard h2 {
-  font-size: 21px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin: 10px 0;
 }
 
 .numero {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: bold;
-  margin: 8px 0;
+  margin: 10px 0;
+  line-height: 1;
 }
 
 .card-dashboard span {
+  display: block;
   color: #666;
   font-size: 15px;
 }
@@ -80,4 +92,4 @@
 
 .bibliotecarios {
   border-top-color: #009688;
-} 
+}

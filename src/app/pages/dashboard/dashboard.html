@@ -9,42 +9,54 @@
   <div class="cards-dashboard">
 
     <mat-card class="card-dashboard total">
-      <div class="icone">📚</div>
+      <div class="icone">
+        <mat-icon>menu_book</mat-icon>
+      </div>
       <h2>Total de Livros</h2>
       <p class="numero">{{ dashboard().totalLivros }}</p>
       <span>Livros cadastrados no sistema</span>
     </mat-card>
 
     <mat-card class="card-dashboard disponiveis">
-      <div class="icone">📗</div>
+      <div class="icone">
+        <mat-icon>library_books</mat-icon>
+      </div>
       <h2>Disponíveis</h2>
       <p class="numero">{{ dashboard().livrosDisponiveis }}</p>
       <span>Livros prontos para empréstimo</span>
     </mat-card>
 
     <mat-card class="card-dashboard emprestados">
-      <div class="icone">📕</div>
+      <div class="icone">
+        <mat-icon>book</mat-icon>
+      </div>
       <h2>Emprestados</h2>
       <p class="numero">{{ dashboard().livrosEmprestados }}</p>
       <span>Livros atualmente emprestados</span>
     </mat-card>
 
     <mat-card class="card-dashboard emprestimos">
-      <div class="icone">🔄</div>
+      <div class="icone">
+        <mat-icon>sync_alt</mat-icon>
+      </div>
       <h2>Empréstimos</h2>
       <p class="numero">{{ dashboard().totalEmprestimos }}</p>
       <span>Total de empréstimos registrados</span>
     </mat-card>
 
     <mat-card class="card-dashboard alunos">
-      <div class="icone">👨‍🎓</div>
+      <div class="icone">
+        <mat-icon>school</mat-icon>
+      </div>
       <h2>Alunos</h2>
       <p class="numero">{{ dashboard().totalAlunos }}</p>
       <span>Alunos cadastrados</span>
     </mat-card>
 
     <mat-card class="card-dashboard bibliotecarios">
-      <div class="icone">👩‍💼</div>
+      <div class="icone">
+        <mat-icon>badge</mat-icon>
+      </div>
       <h2>Bibliotecários</h2>
       <p class="numero">{{ dashboard().totalBibliotecarios }}</p>
       <span>Bibliotecários cadastrados</span>

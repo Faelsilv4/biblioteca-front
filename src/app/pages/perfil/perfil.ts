@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-perfil',
   imports: [
@@ -18,7 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './perfil.html',
   styleUrl: './perfil.css',
@@ -27,37 +28,44 @@ export class Perfil implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly snackBar = inject(MatSnackBar);
 
-  nome = '';
+  nomeUsuario = this.authService.nomeUsuario;
+
   email = '';
   tipoUsuario = '';
   novoNome = '';
   editandoNome = false;
 
   ngOnInit(): void {
-    this.nome = localStorage.getItem('nome') || '';
     this.email = localStorage.getItem('email') || '';
     this.tipoUsuario = localStorage.getItem('tipoUsuario') || '';
-
-    this.novoNome = this.nome;
+    this.novoNome = this.nomeUsuario() || '';
   }
 
   editarNome(): void {
     this.editandoNome = true;
-    this.novoNome = this.nome;
+    this.novoNome = this.nomeUsuario() || '';
   }
 
   cancelarEdicao(): void {
     this.editandoNome = false;
-    this.novoNome = this.nome;
+    this.novoNome = this.nomeUsuario() || '';
   }
 
   atualizarNome(): void {
+    const nomeAtualizado = this.novoNome.trim();
+
+    if (!nomeAtualizado) {
+      this.snackBar.open('Informe um nome válido.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
     this.authService.atualizarNome({
-      novoNome: this.novoNome
+      novoNome: nomeAtualizado
     }).subscribe({
-      next: (perfilAtualizado) => {
-        this.nome = perfilAtualizado.nome;
-        this.novoNome = perfilAtualizado.nome;
+      next: () => {
+        this.novoNome = nomeAtualizado;
         this.editandoNome = false;
 
         this.snackBar.open('Nome atualizado com sucesso!', 'Fechar', {

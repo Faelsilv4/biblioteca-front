@@ -1,10 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
+
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { Navbar } from '../../components/navbar/navbar';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { DataBrPipe } from '../../pipes/data-br-pipe';
 
@@ -14,6 +16,7 @@ import { DataBrPipe } from '../../pipes/data-br-pipe';
     Navbar,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
     DataBrPipe
   ],
   templateUrl: './meus-emprestimos.html',
@@ -32,6 +35,12 @@ export class MeusEmprestimos implements OnInit {
   }
 
   devolver(emprestimoId: number): void {
+    const confirmar = confirm('Tem certeza que deseja devolver este livro?');
+
+    if (!confirmar) {
+      return;
+    }
+
     this.emprestimoService.devolverLivro(emprestimoId).subscribe({
       next: () => {
         this.snackBar.open('Livro devolvido com sucesso!', 'Fechar', {

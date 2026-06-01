@@ -13,7 +13,7 @@ export class Navbar {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  nomeUsuario = this.authService.obterNomeUsuario();
+  nomeUsuario = this.authService.nomeUsuario;
 
   sair(): void {
     this.authService.logout();
@@ -25,8 +25,8 @@ export class Navbar {
   ehBibliotecario(): boolean {
     return this.tipoUsuario === 'BIBLIOTECARIO';
   }
-  
+
   ehAluno(): boolean {
-  return this.tipoUsuario === 'ALUNO';
-}
+    return this.tipoUsuario === 'ALUNO';
+  }
 }

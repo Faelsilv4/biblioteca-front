@@ -9,6 +9,7 @@ import { DataBrPipe } from '../../pipes/data-br-pipe';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-gerenciar-emprestimos',
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     DataBrPipe
   ],
   templateUrl: './gerenciar-emprestimos.html',
