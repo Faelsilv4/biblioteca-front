@@ -11,6 +11,8 @@ interface DashboardResponse {
   livrosDisponiveis: number;
   livrosEmprestados: number;
   totalEmprestimos: number;
+  totalAlunos: number;
+  totalBibliotecarios: number;
 }
 
 @Component({
@@ -30,7 +32,9 @@ export class Dashboard implements OnInit {
     totalLivros: 0,
     livrosDisponiveis: 0,
     livrosEmprestados: 0,
-    totalEmprestimos: 0
+    totalEmprestimos: 0,
+    totalAlunos: 0,
+    totalBibliotecarios: 0
   });
 
   ngOnInit(): void {

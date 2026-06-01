@@ -1,36 +1,53 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Dashboard da Biblioteca</h1>
+  <div class="cabecalho">
+    <h1>Dashboard da Biblioteca</h1>
+    <p>Resumo geral do acervo e dos empréstimos</p>
+  </div>
 
   <div class="cards-dashboard">
 
-    <mat-card class="card-dashboard">
-      <mat-card-title>📚 Total de Livros</mat-card-title>
-      <mat-card-content>
-        <p>{{ dashboard().totalLivros }}</p>
-      </mat-card-content>
+    <mat-card class="card-dashboard total">
+      <div class="icone">📚</div>
+      <h2>Total de Livros</h2>
+      <p class="numero">{{ dashboard().totalLivros }}</p>
+      <span>Livros cadastrados no sistema</span>
     </mat-card>
 
-    <mat-card class="card-dashboard">
-      <mat-card-title>📗 Livros Disponíveis</mat-card-title>
-      <mat-card-content>
-        <p>{{ dashboard().livrosDisponiveis }}</p>
-      </mat-card-content>
+    <mat-card class="card-dashboard disponiveis">
+      <div class="icone">📗</div>
+      <h2>Disponíveis</h2>
+      <p class="numero">{{ dashboard().livrosDisponiveis }}</p>
+      <span>Livros prontos para empréstimo</span>
     </mat-card>
 
-    <mat-card class="card-dashboard">
-      <mat-card-title>📕 Livros Emprestados</mat-card-title>
-      <mat-card-content>
-        <p>{{ dashboard().livrosEmprestados }}</p>
-      </mat-card-content>
+    <mat-card class="card-dashboard emprestados">
+      <div class="icone">📕</div>
+      <h2>Emprestados</h2>
+      <p class="numero">{{ dashboard().livrosEmprestados }}</p>
+      <span>Livros atualmente emprestados</span>
     </mat-card>
 
-    <mat-card class="card-dashboard">
-      <mat-card-title>🔄 Total de Empréstimos</mat-card-title>
-      <mat-card-content>
-        <p>{{ dashboard().totalEmprestimos }}</p>
-      </mat-card-content>
+    <mat-card class="card-dashboard emprestimos">
+      <div class="icone">🔄</div>
+      <h2>Empréstimos</h2>
+      <p class="numero">{{ dashboard().totalEmprestimos }}</p>
+      <span>Total de empréstimos registrados</span>
+    </mat-card>
+
+    <mat-card class="card-dashboard alunos">
+      <div class="icone">👨‍🎓</div>
+      <h2>Alunos</h2>
+      <p class="numero">{{ dashboard().totalAlunos }}</p>
+      <span>Alunos cadastrados</span>
+    </mat-card>
+
+    <mat-card class="card-dashboard bibliotecarios">
+      <div class="icone">👩‍💼</div>
+      <h2>Bibliotecários</h2>
+      <p class="numero">{{ dashboard().totalBibliotecarios }}</p>
+      <span>Bibliotecários cadastrados</span>
     </mat-card>
 
   </div>
