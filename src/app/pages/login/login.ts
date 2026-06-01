@@ -30,7 +30,14 @@ export class Login {
     }).subscribe({
       next: () => {
         this.carregando.set(false);
-        this.router.navigate(['/livros']);
+
+        const tipoUsuario = this.authService.obterTipoUsuario();
+
+        if (tipoUsuario === 'BIBLIOTECARIO') {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/livros']);
+        }
       },
       error: () => {
         this.carregando.set(false);
