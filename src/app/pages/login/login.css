@@ -1,87 +1,118 @@
 .login-container {
   min-height: 100vh;
+  background-color: #f2f4f8;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f2f4f8;
 }
 
 .login-card {
   width: 100%;
-  max-width: 380px;
-  background-color: white;
-  padding: 32px;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 36px 32px;
   border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
 }
 
-.login-card h1 {
+h1 {
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  font-size: 28px;
 }
 
-.login-card p {
+.subtitulo {
   text-align: center;
-  margin-bottom: 24px;
   color: #555;
+  margin-bottom: 28px;
 }
 
-.form-group {
-  margin-bottom: 16px;
+form {
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  display: block;
-  margin-bottom: 6px;
   font-weight: 600;
+  margin-bottom: 8px;
 }
 
 input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  height: 40px;
+  border: 1px solid #bbb;
   border-radius: 6px;
+  padding: 0 12px;
+  font-size: 15px;
+  margin-bottom: 18px;
 }
 
-button {
+input:focus {
+  outline: 2px solid #1976d2;
+  border-color: #1976d2;
+}
+
+.campo-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.campo-senha input {
   width: 100%;
-  padding: 12px;
+  padding-right: 48px;
+}
+
+.botao-olho {
+  position: absolute;
+  right: 8px;
+  top: 4px;
+
   border: none;
-  background-color: #1976d2;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
+  background: transparent;
   cursor: pointer;
+  color: #555;
 }
 
-button:disabled {
-  background-color: #8bbbe8;
+.botao-olho mat-icon {
+  font-size: 24px;
 }
 
 .erro {
-  color: red;
+  color: #c62828;
   text-align: center;
-  margin-bottom: 12px;
+  margin: 4px 0 18px;
 }
 
-a {
-  display: block;
-  text-align: center;
-  margin-top: 16px;
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.links-cadastro {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  margin-top: 16px;
-}
-
-.links-cadastro a {
-  text-decoration: none;
-  color: #1976d2;
+.btn-entrar {
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1976d2;
+  color: white;
   font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-entrar:hover {
+  background-color: #125ca1;
+}
+
+.btn-entrar:disabled {
+  background-color: #90caf9;
+  cursor: not-allowed;
+}
+
+.link-cadastro {
+  text-align: center;
+  margin-top: 28px;
+  font-weight: 600;
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.link-cadastro:hover {
+  text-decoration: underline;
 }

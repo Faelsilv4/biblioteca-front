@@ -7,7 +7,7 @@ import { MeusEmprestimos } from './pages/meus-emprestimos/meus-emprestimos';
 import { Perfil } from './pages/perfil/perfil';
 import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
 import { GerenciarEmprestimos } from './pages/gerenciar-emprestimos/gerenciar-emprestimos';
-import { CadastroBibliotecario } from './pages/cadastro-bibliotecario/cadastro-bibliotecario';
+
 import { Dashboard } from './pages/dashboard/dashboard';
 import { GerenciarBibliotecarios } from './pages/gerenciar-bibliotecarios/gerenciar-bibliotecarios';
 
@@ -46,10 +46,6 @@ export const routes: Routes = [
         path: 'gerenciar-emprestimos',
         component: GerenciarEmprestimos,
         canActivate: [authGuard]
-    },
-    {
-        path: 'cadastro-bibliotecario',
-        component: CadastroBibliotecario
     },
     {
         path: 'dashboard',
