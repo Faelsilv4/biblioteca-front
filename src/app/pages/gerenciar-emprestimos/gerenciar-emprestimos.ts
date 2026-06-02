@@ -6,10 +6,13 @@ import { EmprestimoService } from '../../services/emprestimo.service';
 import { EmprestimoAdmin } from '../../models/emprestimo-admin.model';
 import { DataBrPipe } from '../../pipes/data-br-pipe';
 
+
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-gerenciar-emprestimos',
@@ -20,13 +23,15 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    DataBrPipe
+    DataBrPipe,
+    MatButtonModule
   ],
   templateUrl: './gerenciar-emprestimos.html',
   styleUrl: './gerenciar-emprestimos.css',
 })
 export class GerenciarEmprestimos implements OnInit {
   private readonly emprestimoService = inject(EmprestimoService);
+  private readonly snackBar = inject(MatSnackBar);
 
   emprestimos = signal<EmprestimoAdmin[]>([]);
   carregando = signal(false);
@@ -68,4 +73,33 @@ export class GerenciarEmprestimos implements OnInit {
       emprestimo.livro.titulo.toLowerCase().includes(texto)
     );
   }
+  devolverLivro(emprestimoId: number): void {
+  const confirmar = confirm('Tem certeza que deseja registrar a devolução deste livro?');
+
+  if (!confirmar) {
+    return;
+  }
+
+  this.emprestimoService.devolverLivro(emprestimoId).subscribe({
+    next: () => {
+      this.snackBar.open('Livro devolvido com sucesso!', 'Fechar', {
+        duration: 3000
+      });
+
+      this.carregarTodosEmprestimos();
+    },
+    error: (erro) => {
+      console.error(erro);
+
+      const mensagem =
+        erro.error?.message ||
+        erro.error ||
+        'Não foi possível devolver o livro.';
+
+      this.snackBar.open(mensagem, 'Fechar', {
+        duration: 4000
+      });
+    }
+  });
+}
 }

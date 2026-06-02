@@ -1,0 +1,154 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="cabecalho">
+    <h1>
+      <mat-icon>admin_panel_settings</mat-icon>
+      Gerenciar Bibliotecários
+    </h1>
+    <p>Cadastre, ative e desative bibliotecários do sistema.</p>
+  </div>
+
+  <mat-card class="form-card">
+    <mat-card-title class="titulo-formulario">
+      <mat-icon>person_add</mat-icon>
+      Cadastrar novo bibliotecário
+    </mat-card-title>
+
+    <form (ngSubmit)="cadastrarBibliotecario()" class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" name="nome" [(ngModel)]="novoBibliotecario.nome" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" [(ngModel)]="novoBibliotecario.email" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" name="senha" [(ngModel)]="novoBibliotecario.senha" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de contratação</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerContratacao"
+          name="anoDeContratacao"
+          [(ngModel)]="novoBibliotecario.anoDeContratacao"
+          required
+        >
+
+        <mat-datepicker-toggle matIconSuffix [for]="pickerContratacao"></mat-datepicker-toggle>
+        <mat-datepicker #pickerContratacao></mat-datepicker>
+      </mat-form-field>
+
+      <div class="acoes-formulario">
+        <button mat-raised-button color="primary" type="submit">
+          Cadastrar Bibliotecário
+        </button>
+      </div>
+    </form>
+  </mat-card>
+
+  <div class="secao-lista">
+    <h2>
+      <mat-icon>badge</mat-icon>
+      Bibliotecários cadastrados ({{ bibliotecariosFiltrados().length }})
+    </h2>
+
+    <mat-form-field appearance="outline" class="campo-pesquisa">
+      <mat-label>Pesquisar bibliotecário</mat-label>
+
+      <input
+        matInput
+        type="text"
+        name="filtro"
+        [(ngModel)]="filtro"
+        placeholder="Nome, email ou perfil"
+      />
+    </mat-form-field>
+  </div>
+
+  @if (carregando()) {
+    <p class="mensagem">Carregando bibliotecários...</p>
+  }
+
+  @if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  }
+
+  <div class="grid-bibliotecarios">
+    @if (!carregando() && bibliotecariosFiltrados().length === 0) {
+      <p class="sem-resultados">
+        Nenhum bibliotecário encontrado.
+      </p>
+    }
+
+    @for (bibliotecario of bibliotecariosFiltrados(); track bibliotecario.id) {
+      <mat-card class="card-bibliotecario">
+
+        <mat-card-title>
+          <mat-icon>badge</mat-icon>
+          {{ bibliotecario.nome }}
+        </mat-card-title>
+
+        <mat-card-content>
+
+          <div class="info-bibliotecario">
+            <mat-icon>email</mat-icon>
+            <p><strong>Email:</strong> <span>{{ bibliotecario.email }}</span></p>
+          </div>
+
+          <div class="info-bibliotecario">
+            <mat-icon>admin_panel_settings</mat-icon>
+            <p><strong>Perfil:</strong> <span>{{ bibliotecario.role }}</span></p>
+          </div>
+
+          <div class="info-bibliotecario">
+            <mat-icon>event</mat-icon>
+            <p><strong>Contratação:</strong> <span>{{ bibliotecario.anoDeContratacao }}</span></p>
+          </div>
+
+          <div class="status-container">
+            @if (bibliotecario.ativo) {
+              <span class="status ativo">Ativo</span>
+            } @else {
+              <span class="status inativo">Inativo</span>
+            }
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+          @if (bibliotecario.role !== 'ADMIN') {
+
+            @if (bibliotecario.ativo) {
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="desativarBibliotecario(bibliotecario)">
+                Desativar
+              </button>
+            } @else {
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="ativarBibliotecario(bibliotecario.id)">
+                Ativar
+              </button>
+            }
+
+          } @else {
+            <button mat-raised-button disabled>
+              Administrador principal
+            </button>
+          }
+        </mat-card-actions>
+
+      </mat-card>
+    }
+  </div>
+</div>

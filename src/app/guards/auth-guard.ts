@@ -15,8 +15,13 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (
     (state.url === '/gerenciar-livros' || state.url === '/gerenciar-emprestimos') &&
-    tipoUsuario !== 'BIBLIOTECARIO'
+    tipoUsuario !== 'BIBLIOTECARIO' && tipoUsuario !== 'ADMIN'
   ) {
+    router.navigate(['/livros']);
+    return false;
+  }
+
+  if (state.url === '/gerenciar-bibliotecarios' && tipoUsuario !== 'ADMIN') {
     router.navigate(['/livros']);
     return false;
   }

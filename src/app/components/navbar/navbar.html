@@ -18,6 +18,11 @@
         @if (ehBibliotecario()) {
         <a routerLink="/gerenciar-livros">Gerenciar Livros</a>
         <a routerLink="/gerenciar-emprestimos">Empréstimos</a>
+        
+        @if (ehAdmin()) {
+            <a routerLink="/gerenciar-bibliotecarios">Bibliotecários</a>
+        }
+
         <a routerLink="/dashboard">Dashboard</a>
         }
     </div>

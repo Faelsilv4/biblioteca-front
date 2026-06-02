@@ -9,6 +9,7 @@ import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
 import { GerenciarEmprestimos } from './pages/gerenciar-emprestimos/gerenciar-emprestimos';
 import { CadastroBibliotecario } from './pages/cadastro-bibliotecario/cadastro-bibliotecario';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { GerenciarBibliotecarios } from './pages/gerenciar-bibliotecarios/gerenciar-bibliotecarios';
 
 import { authGuard } from './guards/auth-guard';
 
@@ -55,6 +56,11 @@ export const routes: Routes = [
         component: Dashboard,
         canActivate: [authGuard]
     },
+    {
+    path: 'gerenciar-bibliotecarios',
+    component: GerenciarBibliotecarios,
+    canActivate: [authGuard]
+},
     {
         path: '**',
         redirectTo: ''

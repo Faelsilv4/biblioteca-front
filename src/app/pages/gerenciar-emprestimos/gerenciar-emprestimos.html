@@ -48,6 +48,15 @@
           </p>
         </div>
 
+        <mat-card-actions>
+          @if (!emprestimo.dataDevolucao) {
+          <button mat-raised-button color="primary" (click)="devolverLivro(emprestimo.id)">
+            <mat-icon>assignment_return</mat-icon>
+            Devolver Livro
+          </button>
+          }
+        </mat-card-actions>
+
         <div class="info-emprestimo">
           <mat-icon>email</mat-icon>
           <p>

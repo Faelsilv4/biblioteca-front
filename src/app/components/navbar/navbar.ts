@@ -23,10 +23,14 @@ export class Navbar {
   tipoUsuario = this.authService.obterTipoUsuario();
 
   ehBibliotecario(): boolean {
-    return this.tipoUsuario === 'BIBLIOTECARIO';
+    return this.tipoUsuario === 'BIBLIOTECARIO' || this.tipoUsuario === 'ADMIN';
   }
 
   ehAluno(): boolean {
     return this.tipoUsuario === 'ALUNO';
+  }
+
+  ehAdmin(): boolean {
+    return this.tipoUsuario === 'ADMIN';
   }
 }
