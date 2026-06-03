@@ -1,0 +1,28 @@
+.dialog-container {
+  padding: 8px;
+  max-width: 420px;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+h2 mat-icon {
+  color: #f57c00;
+}
+
+p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}

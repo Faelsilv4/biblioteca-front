@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
 @Component({
   selector: 'app-gerenciar-alunos',
@@ -21,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    ConfirmacaoDialog
   ],
   templateUrl: './gerenciar-alunos.html',
   styleUrl: './gerenciar-alunos.css',
@@ -29,6 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
 export class GerenciarAlunos implements OnInit {
   private readonly alunoService = inject(AlunoService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
 
   alunos = signal<Aluno[]>([]);
   carregando = signal(false);
@@ -57,53 +61,67 @@ export class GerenciarAlunos implements OnInit {
     });
   }
 
-  ativarAluno(id: number): void {
-    this.alunoService.ativar(id).subscribe({
-      next: () => {
-        this.snackBar.open('Aluno ativado com sucesso!', 'Fechar', {
-          duration: 3000
-        });
-
-        this.carregarAlunos();
-      },
-      error: () => {
-        this.snackBar.open('Não foi possível ativar o aluno.', 'Fechar', {
-          duration: 3000
-        });
+  ativarAluno(aluno: Aluno): void {
+    const dialogRef = this.dialog.open(ConfirmacaoDialog, {
+      data: {
+        titulo: 'Ativar aluno',
+        mensagem: `Tem certeza que deseja ativar o aluno "${aluno.nome}"? Após a ativação, ele poderá acessar novamente o sistema.`,
+        textoConfirmar: 'Ativar',
+        icone: 'check_circle'
       }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmou) => {
+      if (!confirmou) {
+        return;
+      }
+
+      this.alunoService.ativar(aluno.id).subscribe({
+        next: () => {
+          this.snackBar.open('Aluno ativado com sucesso!', 'Fechar', {
+            duration: 3000
+          });
+
+          this.carregarAlunos();
+        },
+        error: () => {
+          this.snackBar.open('Não foi possível ativar o aluno.', 'Fechar', {
+            duration: 3000
+          });
+        }
+      });
     });
   }
 
   desativarAluno(aluno: Aluno): void {
-    const confirmar = confirm(`Deseja desativar o aluno ${aluno.nome}?`);
-
-    if (!confirmar) {
-      return;
-    }
-
-    this.alunoService.desativar(aluno.id).subscribe({
-      next: () => {
-        this.snackBar.open('Aluno desativado com sucesso!', 'Fechar', {
-          duration: 3000
-        });
-
-        this.carregarAlunos();
-      },
-      error: (erro) => {
-        console.error(erro);
-
-        const mensagem =
-          erro.error?.message ||
-          erro.error?.mensagem ||
-          erro.error ||
-          'Não foi possível desativar o aluno.';
-
-        this.snackBar.open(
-          typeof mensagem === 'string' ? mensagem : 'Não foi possível desativar o aluno.',
-          'Fechar',
-          { duration: 4000 }
-        );
+    const dialogRef = this.dialog.open(ConfirmacaoDialog, {
+      data: {
+        titulo: 'Desativar aluno',
+        mensagem: `Tem certeza que deseja desativar o aluno "${aluno.nome}"? O aluno perderá o acesso ao sistema até ser reativado por um administrador.`,
+        textoConfirmar: 'Desativar',
+        icone: 'warning'
       }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmou) => {
+      if (!confirmou) {
+        return;
+      }
+
+      this.alunoService.desativar(aluno.id).subscribe({
+        next: () => {
+          this.snackBar.open('Aluno desativado com sucesso!', 'Fechar', {
+            duration: 3000
+          });
+
+          this.carregarAlunos();
+        },
+        error: () => {
+          this.snackBar.open('Não foi possível desativar o aluno.', 'Fechar', {
+            duration: 3000
+          });
+        }
+      });
     });
   }
 

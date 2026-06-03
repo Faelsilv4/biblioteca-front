@@ -1,0 +1,18 @@
+<div class="dialog-container">
+  <h2>
+    <mat-icon>{{ data.icone || 'warning' }}</mat-icon>
+    {{ data.titulo }}
+  </h2>
+
+  <p>{{ data.mensagem }}</p>
+
+  <div class="acoes">
+    <button mat-button (click)="cancelar()">
+      Cancelar
+    </button>
+
+    <button mat-raised-button color="warn" (click)="confirmar()">
+      {{ data.textoConfirmar }}
+    </button>
+  </div>
+</div>

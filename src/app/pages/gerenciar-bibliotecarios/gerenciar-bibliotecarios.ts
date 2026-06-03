@@ -13,24 +13,31 @@
   import { MatIconModule } from '@angular/material/icon';
   import { MatDatepickerModule } from '@angular/material/datepicker';
   import { MatNativeDateModule } from '@angular/material/core';
+  import { MatDialog } from '@angular/material/dialog';
+import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
-  @Component({
-    selector: 'app-gerenciar-bibliotecarios',
-    imports: [
-      Navbar,
-      FormsModule,
-      MatCardModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
-      MatIconModule,
-      MatDatepickerModule,
-      MatNativeDateModule
-    ],
-    templateUrl: './gerenciar-bibliotecarios.html',
-    styleUrl: './gerenciar-bibliotecarios.css',
-  })
+ @Component({
+  selector: 'app-gerenciar-bibliotecarios',
+  imports: [
+    Navbar,
+    FormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ConfirmacaoDialog
+  ],
+  templateUrl: './gerenciar-bibliotecarios.html',
+  styleUrl: './gerenciar-bibliotecarios.css'
+})
+
   export class GerenciarBibliotecarios implements OnInit {
+    
+    private readonly dialog = inject(MatDialog);
+
     private readonly bibliotecarioService = inject(BibliotecarioService);
     private readonly snackBar = inject(MatSnackBar);
 
@@ -96,64 +103,78 @@
       });
     }
 
-    ativarBibliotecario(id: number): void {
-      this.bibliotecarioService.ativar(id).subscribe({
-        next: () => {
-          this.snackBar.open('Bibliotecário ativado com sucesso!', 'Fechar', {
-            duration: 3000
-          });
-
-          this.carregarBibliotecarios();
-        },
-        error: () => {
-          this.snackBar.open('Não foi possível ativar o bibliotecário.', 'Fechar', {
-            duration: 3000
-          });
-        }
-      });
+    ativarBibliotecario(bibliotecario: Bibliotecario): void {
+  const dialogRef = this.dialog.open(ConfirmacaoDialog, {
+    data: {
+      titulo: 'Ativar bibliotecário',
+      mensagem: `Tem certeza que deseja ativar o bibliotecário "${bibliotecario.nome}"? Após a ativação, ele poderá acessar novamente o sistema.`,
+      textoConfirmar: 'Ativar',
+      icone: 'check_circle'
     }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmou) => {
+    if (!confirmou) {
+      return;
+    }
+
+    this.bibliotecarioService.ativar(bibliotecario.id).subscribe({
+      next: () => {
+        this.snackBar.open('Bibliotecário ativado com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+
+        this.carregarBibliotecarios();
+      },
+      error: () => {
+        this.snackBar.open('Não foi possível ativar o bibliotecário.', 'Fechar', {
+          duration: 3000
+        });
+      }
+    });
+  });
+}
 
     desativarBibliotecario(bibliotecario: Bibliotecario): void {
-      if (bibliotecario.role === 'ADMIN') {
-        this.snackBar.open(
-          'O administrador principal do sistema não pode ser desativado.',
-          'Fechar',
-          { duration: 4000 }
-        );
-        return;
-      }
+  if (bibliotecario.role === 'ADMIN') {
+    this.snackBar.open(
+      'O administrador principal do sistema não pode ser desativado.',
+      'Fechar',
+      { duration: 4000 }
+    );
+    return;
+  }
 
-      const confirmar = confirm(`Deseja desativar o bibliotecário ${bibliotecario.nome}?`);
-
-      if (!confirmar) {
-        return;
-      }
-
-      this.bibliotecarioService.desativar(bibliotecario.id).subscribe({
-        next: () => {
-          this.snackBar.open('Bibliotecário desativado com sucesso!', 'Fechar', {
-            duration: 3000
-          });
-
-          this.carregarBibliotecarios();
-        },
-        error: (erro) => {
-          console.error(erro);
-
-          const mensagem =
-            erro.error?.message ||
-            erro.error?.mensagem ||
-            erro.error ||
-            'Não foi possível desativar o bibliotecário.';
-
-          this.snackBar.open(
-            typeof mensagem === 'string' ? mensagem : 'Não foi possível desativar o bibliotecário.',
-            'Fechar',
-            { duration: 4000 }
-          );
-        }
-      });
+  const dialogRef = this.dialog.open(ConfirmacaoDialog, {
+    data: {
+      titulo: 'Desativar bibliotecário',
+      mensagem: `Tem certeza que deseja desativar o bibliotecário "${bibliotecario.nome}"? O bibliotecário perderá o acesso ao sistema até ser reativado por um administrador.`,
+      textoConfirmar: 'Desativar',
+      icone: 'warning'
     }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmou) => {
+    if (!confirmou) {
+      return;
+    }
+
+    this.bibliotecarioService.desativar(bibliotecario.id).subscribe({
+      next: () => {
+        this.snackBar.open('Bibliotecário desativado com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+
+        this.carregarBibliotecarios();
+      },
+      error: () => {
+        this.snackBar.open('Não foi possível desativar o bibliotecário.', 'Fechar', {
+          duration: 3000
+        });
+      }
+    });
+  });
+}
 
     bibliotecariosFiltrados(): Bibliotecario[] {
       const texto = this.filtro.toLowerCase().trim();
