@@ -7,6 +7,7 @@ import { MeusEmprestimos } from './pages/meus-emprestimos/meus-emprestimos';
 import { Perfil } from './pages/perfil/perfil';
 import { GerenciarLivros } from './pages/gerenciar-livros/gerenciar-livros';
 import { GerenciarEmprestimos } from './pages/gerenciar-emprestimos/gerenciar-emprestimos';
+import { GerenciarAlunos } from './pages/gerenciar-alunos/gerenciar-alunos';
 
 import { Dashboard } from './pages/dashboard/dashboard';
 import { GerenciarBibliotecarios } from './pages/gerenciar-bibliotecarios/gerenciar-bibliotecarios';
@@ -53,10 +54,15 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
-    path: 'gerenciar-bibliotecarios',
-    component: GerenciarBibliotecarios,
-    canActivate: [authGuard]
-},
+        path: 'gerenciar-bibliotecarios',
+        component: GerenciarBibliotecarios,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'gerenciar-alunos',
+        component: GerenciarAlunos,
+        canActivate: [authGuard]
+    },
     {
         path: '**',
         redirectTo: ''

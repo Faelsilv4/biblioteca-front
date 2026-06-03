@@ -1,0 +1,102 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="cabecalho">
+    <h1>
+      <mat-icon>school</mat-icon>
+      Gerenciar Alunos
+    </h1>
+    <p>Visualize, ative e desative alunos cadastrados no sistema.</p>
+  </div>
+
+  <div class="secao-lista">
+    <h2>
+      <mat-icon>groups</mat-icon>
+      Alunos cadastrados ({{ alunosFiltrados().length }})
+    </h2>
+
+    <mat-form-field appearance="outline" class="campo-pesquisa">
+      <mat-label>Pesquisar aluno</mat-label>
+
+      <input
+        matInput
+        type="text"
+        name="filtro"
+        [(ngModel)]="filtro"
+        placeholder="Nome, email ou matrícula"
+      />
+    </mat-form-field>
+  </div>
+
+  @if (carregando()) {
+    <p class="mensagem">Carregando alunos...</p>
+  }
+
+  @if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  }
+
+  <div class="grid-alunos">
+    @if (!carregando() && alunosFiltrados().length === 0) {
+      <p class="sem-resultados">
+        Nenhum aluno encontrado.
+      </p>
+    }
+
+    @for (aluno of alunosFiltrados(); track aluno.id) {
+      <mat-card class="card-aluno">
+
+        <mat-card-title>
+          <mat-icon>person</mat-icon>
+          {{ aluno.nome }}
+        </mat-card-title>
+
+        <mat-card-content>
+
+          <div class="info-aluno">
+            <mat-icon>email</mat-icon>
+            <p><strong>Email:</strong> <span>{{ aluno.email }}</span></p>
+          </div>
+
+          <div class="info-aluno">
+            <mat-icon>badge</mat-icon>
+            <p><strong>Perfil:</strong> <span>{{ aluno.role }}</span></p>
+          </div>
+
+          <div class="info-aluno">
+            <mat-icon>confirmation_number</mat-icon>
+            <p><strong>Matrícula:</strong> <span>{{ aluno.matricula }}</span></p>
+          </div>
+
+          <div class="status-container">
+            @if (aluno.ativo) {
+              <span class="status ativo">Ativo</span>
+            } @else {
+              <span class="status inativo">Inativo</span>
+            }
+          </div>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+          @if (aluno.ativo) {
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="desativarAluno(aluno)">
+              Desativar
+            </button>
+          } @else {
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="ativarAluno(aluno.id)">
+              Ativar
+            </button>
+          }
+        </mat-card-actions>
+
+      </mat-card>
+    }
+  </div>
+</div>

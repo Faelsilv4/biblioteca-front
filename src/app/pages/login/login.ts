@@ -46,9 +46,15 @@ export class Login {
         this.carregando.set(false);
         this.router.navigate(['/livros']);
       },
-      error: () => {
+      error: (erro) => {
         this.carregando.set(false);
-        this.erro.set('Email ou senha inválidos.');
+
+        const mensagem =
+          erro.error?.mensagem ||
+          erro.error?.message ||
+          'Email ou senha inválidos.';
+
+        this.erro.set(mensagem);
       }
     });
   }
