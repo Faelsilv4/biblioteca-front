@@ -19,10 +19,6 @@
   <p class="mensagem">Carregando empréstimos...</p>
   }
 
-  @if (erro()) {
-  <p class="erro">{{ erro() }}</p>
-  }
-
   <div class="grid-emprestimos">
     @if (!carregando() && emprestimosFiltrados().length === 0) {
     <p class="sem-resultados">

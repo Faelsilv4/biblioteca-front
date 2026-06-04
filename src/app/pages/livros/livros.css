@@ -14,7 +14,6 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-
   font-size: 34px;
   margin-bottom: 8px;
 }
@@ -45,14 +44,12 @@
 }
 
 .card-livro {
-  padding: 22px;
+  padding: 18px;
   border-radius: 16px;
   border-top: 6px solid #1976d2;
-  min-height: 330px;
-
+  min-height: 520px;
   display: flex;
   flex-direction: column;
-
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -61,11 +58,47 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
+.capa-container {
+  width: 100%;
+  height: 230px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e9eef5;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.capa-livro {
+  max-width: 150px;
+  max-height: 210px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.sem-capa {
+  width: 150px;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.sem-capa mat-icon {
+  font-size: 60px;
+  width: 60px;
+  height: 60px;
+}
+
 mat-card-title {
   display: flex;
   align-items: center;
   gap: 10px;
-
   font-size: 21px;
   line-height: 1.2;
   margin-bottom: 18px;
@@ -130,6 +163,7 @@ mat-card-actions {
   margin-top: 18px;
 }
 
+.mensagem,
 .sem-resultados {
   grid-column: 1 / -1;
   text-align: center;
@@ -141,4 +175,18 @@ mat-card-actions {
 .erro {
   text-align: center;
   color: red;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .grid-livros {
+    grid-template-columns: 1fr;
+  }
+
+  .card-livro {
+    min-height: auto;
+  }
 }

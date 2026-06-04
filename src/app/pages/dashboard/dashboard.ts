@@ -1,21 +1,24 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { Navbar } from '../../components/navbar/navbar';
 
-import { HttpClient } from '@angular/common/http';
-
 import { MatCardModule } from '@angular/material/card';
-
 import { MatIconModule } from '@angular/material/icon';
-
 
 interface DashboardResponse {
   totalLivros: number;
   livrosDisponiveis: number;
   livrosEmprestados: number;
   totalEmprestimos: number;
+
   totalAlunos: number;
+  alunosAtivos: number;
+  alunosInativos: number;
+
   totalBibliotecarios: number;
+  bibliotecariosAtivos: number;
+  bibliotecariosInativos: number;
 }
 
 @Component({
@@ -29,7 +32,6 @@ interface DashboardResponse {
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-
   private readonly http = inject(HttpClient);
 
   dashboard = signal<DashboardResponse>({
@@ -37,8 +39,14 @@ export class Dashboard implements OnInit {
     livrosDisponiveis: 0,
     livrosEmprestados: 0,
     totalEmprestimos: 0,
+
     totalAlunos: 0,
-    totalBibliotecarios: 0
+    alunosAtivos: 0,
+    alunosInativos: 0,
+
+    totalBibliotecarios: 0,
+    bibliotecariosAtivos: 0,
+    bibliotecariosInativos: 0
   });
 
   ngOnInit(): void {

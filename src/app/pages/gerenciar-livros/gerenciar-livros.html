@@ -56,7 +56,6 @@
           [(ngModel)]="novoLivro.anoDePublicacao"
           required
         >
-
         <mat-datepicker-toggle matIconSuffix [for]="pickerPublicacao"></mat-datepicker-toggle>
         <mat-datepicker #pickerPublicacao></mat-datepicker>
       </mat-form-field>
@@ -64,6 +63,17 @@
       <mat-form-field appearance="outline">
         <mat-label>Categoria</mat-label>
         <input matInput type="text" name="categoria" [(ngModel)]="novoLivro.categoria" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>URL da capa</mat-label>
+        <input
+          matInput
+          type="text"
+          name="urlCapa"
+          [(ngModel)]="novoLivro.urlCapa"
+          placeholder="https://site.com/capa.jpg"
+        >
       </mat-form-field>
 
       <div class="acoes-formulario">
@@ -81,6 +91,18 @@
           </button>
         }
       </div>
+
+      @if (novoLivro.urlCapa) {
+        <div class="preview-capa">
+          <p>Pré-visualização da capa</p>
+          <img
+            [src]="novoLivro.urlCapa || '/assets/sem-capa.png'"
+            (error)="$any($event.target).src = '/assets/sem-capa.png'"
+            alt="Prévia da capa"
+            class="preview-imagem"
+          >
+        </div>
+      }
     </form>
   </mat-card>
 
@@ -92,7 +114,6 @@
 
     <mat-form-field appearance="outline" class="campo-pesquisa">
       <mat-label>Pesquisar livro</mat-label>
-
       <input
         matInput
         type="text"
@@ -105,13 +126,20 @@
 
   <div class="grid-livros">
     @if (livrosFiltrados().length === 0) {
-      <p class="sem-resultados">
-        Nenhum livro encontrado.
-      </p>
+      <p class="sem-resultados">Nenhum livro encontrado.</p>
     }
 
     @for (livro of livrosFiltrados(); track livro.id) {
       <mat-card class="card-livro">
+
+        <div class="capa-container">
+          <img
+            [src]="livro.urlCapa || '/assets/sem-capa.png'"
+            (error)="$any($event.target).src = '/assets/sem-capa.png'"
+            alt="Capa do livro"
+            class="capa-livro"
+          >
+        </div>
 
         <mat-card-title>
           <mat-icon>auto_stories</mat-icon>
@@ -119,7 +147,6 @@
         </mat-card-title>
 
         <mat-card-content>
-
           <div class="info-livro">
             <mat-icon>person</mat-icon>
             <p><strong>Autor:</strong> <span>{{ livro.autor }}</span></p>
@@ -137,16 +164,11 @@
 
           <div class="status-container">
             @if (livro.status === 'DISPONIVEL') {
-              <span class="status disponivel">
-                Disponível
-              </span>
+              <span class="status disponivel">Disponível</span>
             } @else {
-              <span class="status emprestado">
-                Emprestado
-              </span>
+              <span class="status emprestado">Emprestado</span>
             }
           </div>
-
         </mat-card-content>
 
         <mat-card-actions>

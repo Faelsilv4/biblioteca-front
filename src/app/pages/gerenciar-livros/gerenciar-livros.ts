@@ -53,7 +53,8 @@ export class GerenciarLivros implements OnInit {
     genero: '',
     numPaginas: 0,
     anoDePublicacao: '',
-    categoria: ''
+    categoria: '',
+    urlCapa: ''
   };
 
   ngOnInit(): void {
@@ -95,7 +96,8 @@ export class GerenciarLivros implements OnInit {
       genero: livro.genero,
       numPaginas: livro.numPaginas,
       anoDePublicacao: livro.anoDePublicacao,
-      categoria: livro.categoria
+      categoria: livro.categoria,
+      urlCapa: livro.urlCapa || ''
     };
 
     window.scrollTo({
@@ -200,7 +202,8 @@ export class GerenciarLivros implements OnInit {
       genero: '',
       numPaginas: 0,
       anoDePublicacao: '',
-      categoria: ''
+      categoria: '',
+      urlCapa: ''
     };
   }
 }

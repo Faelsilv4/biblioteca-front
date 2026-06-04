@@ -3,7 +3,7 @@
 <div class="container">
   <div class="cabecalho">
     <h1>Dashboard da Biblioteca</h1>
-    <p>Resumo geral do acervo e dos empréstimos</p>
+    <p>Resumo geral do acervo, empréstimos e usuários</p>
   </div>
 
   <div class="cards-dashboard">
@@ -53,6 +53,24 @@
       <span>Alunos cadastrados</span>
     </mat-card>
 
+    <mat-card class="card-dashboard alunos-ativos">
+      <div class="icone">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <h2>Alunos Ativos</h2>
+      <p class="numero">{{ dashboard().alunosAtivos }}</p>
+      <span>Alunos com acesso liberado</span>
+    </mat-card>
+
+    <mat-card class="card-dashboard alunos-inativos">
+      <div class="icone">
+        <mat-icon>block</mat-icon>
+      </div>
+      <h2>Alunos Inativos</h2>
+      <p class="numero">{{ dashboard().alunosInativos }}</p>
+      <span>Alunos com acesso bloqueado</span>
+    </mat-card>
+
     <mat-card class="card-dashboard bibliotecarios">
       <div class="icone">
         <mat-icon>badge</mat-icon>
@@ -60,6 +78,24 @@
       <h2>Bibliotecários</h2>
       <p class="numero">{{ dashboard().totalBibliotecarios }}</p>
       <span>Bibliotecários cadastrados</span>
+    </mat-card>
+
+    <mat-card class="card-dashboard bibliotecarios-ativos">
+      <div class="icone">
+        <mat-icon>verified_user</mat-icon>
+      </div>
+      <h2>Bibliotecários Ativos</h2>
+      <p class="numero">{{ dashboard().bibliotecariosAtivos }}</p>
+      <span>Bibliotecários com acesso liberado</span>
+    </mat-card>
+
+    <mat-card class="card-dashboard bibliotecarios-inativos">
+      <div class="icone">
+        <mat-icon>person_off</mat-icon>
+      </div>
+      <h2>Bibliotecários Inativos</h2>
+      <p class="numero">{{ dashboard().bibliotecariosInativos }}</p>
+      <span>Bibliotecários com acesso bloqueado</span>
     </mat-card>
 
   </div>

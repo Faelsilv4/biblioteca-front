@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Livro } from '../models/livro.model';
 import { Observable } from 'rxjs';
 
+type LivroRequest = Omit<Livro, 'id' | 'status'>;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -42,14 +44,14 @@ export class LivroService {
     });
   }
 
-  cadastrarLivro(livro: Omit<Livro, 'id' | 'status'>): Observable<Livro> {
+  cadastrarLivro(livro: LivroRequest): Observable<Livro> {
     return this.http.post<Livro>(this.apiUrl, {
       ...livro,
       status: 'DISPONIVEL'
     });
   }
 
-  atualizarLivro(id: number, livro: Omit<Livro, 'id' | 'status'>): Observable<Livro> {
+  atualizarLivro(id: number, livro: LivroRequest): Observable<Livro> {
     return this.http.put<Livro>(
       `${this.apiUrl}/${id}`,
       livro

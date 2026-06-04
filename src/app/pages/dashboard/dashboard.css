@@ -90,6 +90,22 @@
   border-top-color: #ff9800;
 }
 
+.alunos-ativos {
+  border-top-color: #2e7d32;
+}
+
+.alunos-inativos {
+  border-top-color: #c62828;
+}
+
 .bibliotecarios {
   border-top-color: #009688;
+}
+
+.bibliotecarios-ativos {
+  border-top-color: #1565c0;
+}
+
+.bibliotecarios-inativos {
+  border-top-color: #ad1457;
 }

@@ -1,3 +1,4 @@
+
 export interface Livro {
   id: number;
   titulo: string;
@@ -6,5 +7,6 @@ export interface Livro {
   numPaginas: number;
   anoDePublicacao: string;
   categoria: string;
+  urlCapa: string;
   status: string;
 }
