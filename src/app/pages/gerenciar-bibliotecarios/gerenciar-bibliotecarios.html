@@ -6,16 +6,27 @@
       <mat-icon>admin_panel_settings</mat-icon>
       Gerenciar Bibliotecários
     </h1>
-    <p>Cadastre, ative e desative bibliotecários do sistema.</p>
+    <p>Cadastre, edite, ative e desative bibliotecários do sistema.</p>
   </div>
 
   <mat-card class="form-card">
     <mat-card-title class="titulo-formulario">
-      <mat-icon>person_add</mat-icon>
-      Cadastrar novo bibliotecário
+      <mat-icon>
+        @if (bibliotecarioEditandoId) {
+          edit
+        } @else {
+          person_add
+        }
+      </mat-icon>
+
+      @if (bibliotecarioEditandoId) {
+        Editar bibliotecário
+      } @else {
+        Cadastrar novo bibliotecário
+      }
     </mat-card-title>
 
-    <form (ngSubmit)="cadastrarBibliotecario()" class="form-grid">
+    <form (ngSubmit)="salvarBibliotecario()" class="form-grid">
       <mat-form-field appearance="outline">
         <mat-label>Nome</mat-label>
         <input matInput type="text" name="nome" [(ngModel)]="novoBibliotecario.nome" required>
@@ -26,10 +37,12 @@
         <input matInput type="email" name="email" [(ngModel)]="novoBibliotecario.email" required>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Senha</mat-label>
-        <input matInput type="password" name="senha" [(ngModel)]="novoBibliotecario.senha" required>
-      </mat-form-field>
+      @if (!bibliotecarioEditandoId) {
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" name="senha" [(ngModel)]="novoBibliotecario.senha" required>
+        </mat-form-field>
+      }
 
       <mat-form-field appearance="outline">
         <mat-label>Data de contratação</mat-label>
@@ -47,8 +60,18 @@
 
       <div class="acoes-formulario">
         <button mat-raised-button color="primary" type="submit">
-          Cadastrar Bibliotecário
+          @if (bibliotecarioEditandoId) {
+            Salvar Alterações
+          } @else {
+            Cadastrar Bibliotecário
+          }
         </button>
+
+        @if (bibliotecarioEditandoId) {
+          <button mat-stroked-button type="button" (click)="cancelarEdicao()">
+            Cancelar Edição
+          </button>
+        }
       </div>
     </form>
   </mat-card>
@@ -124,6 +147,14 @@
 
         <mat-card-actions>
           @if (bibliotecario.role !== 'ADMIN') {
+
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="editarBibliotecario(bibliotecario)">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </button>
 
             @if (bibliotecario.ativo) {
               <button
