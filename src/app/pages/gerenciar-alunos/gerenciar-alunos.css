@@ -31,6 +31,61 @@
   font-size: 17px;
 }
 
+/* =========================
+   FORMULÁRIO DE EDIÇÃO
+========================= */
+
+.form-card {
+  padding: 26px;
+  border-radius: 16px;
+  border-top: 6px solid #1976d2;
+  margin-bottom: 40px;
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.titulo-formulario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 22px;
+  margin-bottom: 22px;
+}
+
+.titulo-formulario mat-icon {
+  color: #1976d2;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.acoes-formulario {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+.acoes-formulario button {
+  min-width: 180px;
+}
+
+/* =========================
+   LISTAGEM
+========================= */
+
 .secao-lista {
   margin-bottom: 24px;
 }
@@ -52,6 +107,10 @@
   width: 100%;
   max-width: 520px;
 }
+
+/* =========================
+   CARDS
+========================= */
 
 .grid-alunos {
   display: grid;
@@ -117,6 +176,10 @@ mat-card-content {
   font-weight: 500;
 }
 
+/* =========================
+   STATUS
+========================= */
+
 .status-container {
   margin-top: 18px;
 }
@@ -138,12 +201,20 @@ mat-card-content {
   color: #721c24;
 }
 
+/* =========================
+   AÇÕES
+========================= */
+
 mat-card-actions {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
   margin-top: 18px;
 }
+
+/* =========================
+   MENSAGENS
+========================= */
 
 .mensagem,
 .sem-resultados {

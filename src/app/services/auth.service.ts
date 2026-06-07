@@ -31,8 +31,9 @@ interface RegistroResponse {
   mensagem: string;
 }
 
-interface AtualizarNomeRequest {
-  novoNome: string;
+interface AtualizarPerfilRequest {
+  nome: string;
+  email: string;
 }
 
 interface PerfilResponse {
@@ -50,6 +51,7 @@ interface PerfilResponse {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = 'http://localhost:8080/api/auth';
+  private readonly perfilUrl = 'http://localhost:8080/api/perfil';
 
   nomeUsuario = signal<string | null>(localStorage.getItem('nome'));
 
@@ -81,6 +83,20 @@ export class AuthService {
     );
   }
 
+  atualizarPerfil(dados: AtualizarPerfilRequest): Observable<PerfilResponse> {
+    return this.http.put<PerfilResponse>(
+      this.perfilUrl,
+      dados
+    ).pipe(
+      tap((resposta) => {
+        localStorage.setItem('nome', resposta.nome);
+        localStorage.setItem('email', resposta.email);
+
+        this.nomeUsuario.set(resposta.nome);
+      })
+    );
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('tipoUsuario');
@@ -106,15 +122,7 @@ export class AuthService {
     return localStorage.getItem('tipoUsuario');
   }
 
-  atualizarNome(dados: AtualizarNomeRequest): Observable<PerfilResponse> {
-    return this.http.put<PerfilResponse>(
-      'http://localhost:8080/api/perfil',
-      dados
-    ).pipe(
-      tap((resposta) => {
-        localStorage.setItem('nome', resposta.nome);
-        this.nomeUsuario.set(resposta.nome);
-      })
-    );
+  obterEmailUsuario(): string | null {
+    return localStorage.getItem('email');
   }
 }

@@ -6,8 +6,62 @@
       <mat-icon>school</mat-icon>
       Gerenciar Alunos
     </h1>
-    <p>Visualize, ative e desative alunos cadastrados no sistema.</p>
+    <p>Visualize, edite, ative e desative alunos cadastrados no sistema.</p>
   </div>
+
+  @if (alunoEditandoId) {
+    <mat-card class="form-card">
+      <mat-card-title class="titulo-formulario">
+        <mat-icon>edit</mat-icon>
+        Editar aluno
+      </mat-card-title>
+
+      <form (ngSubmit)="salvarAlteracoes()" class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input
+            matInput
+            type="text"
+            name="nome"
+            [(ngModel)]="alunoEditando.nome"
+            required
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            name="email"
+            [(ngModel)]="alunoEditando.email"
+            required
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Matrícula</mat-label>
+          <input
+            matInput
+            type="number"
+            name="matricula"
+            [(ngModel)]="alunoEditando.matricula"
+            required
+          >
+        </mat-form-field>
+
+        <div class="acoes-formulario">
+          <button mat-raised-button color="primary" type="submit">
+            Salvar Alterações
+          </button>
+
+          <button mat-stroked-button type="button" (click)="cancelarEdicao()">
+            Cancelar Edição
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  }
 
   <div class="secao-lista">
     <h2>
@@ -79,6 +133,14 @@
         </mat-card-content>
 
         <mat-card-actions>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="editarAluno(aluno)">
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+
           @if (aluno.ativo) {
             <button
               mat-raised-button

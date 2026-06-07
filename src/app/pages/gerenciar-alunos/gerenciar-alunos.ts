@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+
 import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
 @Component({
@@ -23,8 +24,7 @@ import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmac
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule,
-    ConfirmacaoDialog
+    MatIconModule
   ],
   templateUrl: './gerenciar-alunos.html',
   styleUrl: './gerenciar-alunos.css',
@@ -39,6 +39,13 @@ export class GerenciarAlunos implements OnInit {
   erro = signal<string | null>(null);
 
   filtro = '';
+  alunoEditandoId: number | null = null;
+
+  alunoEditando = {
+    nome: '',
+    email: '',
+    matricula: 0
+  };
 
   ngOnInit(): void {
     this.carregarAlunos();
@@ -59,6 +66,65 @@ export class GerenciarAlunos implements OnInit {
         this.carregando.set(false);
       }
     });
+  }
+
+  editarAluno(aluno: Aluno): void {
+    this.alunoEditandoId = aluno.id;
+
+    this.alunoEditando = {
+      nome: aluno.nome,
+      email: aluno.email,
+      matricula: aluno.matricula
+    };
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  salvarAlteracoes(): void {
+    if (!this.alunoEditandoId) {
+      return;
+    }
+
+    this.alunoService.atualizar(this.alunoEditandoId, this.alunoEditando).subscribe({
+      next: () => {
+        this.snackBar.open('Aluno atualizado com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+
+        this.cancelarEdicao();
+        this.carregarAlunos();
+      },
+      error: (erro) => {
+        console.error(erro);
+
+        const mensagem =
+          erro.error?.message ||
+          erro.error?.mensagem ||
+          erro.error ||
+          'Não foi possível atualizar o aluno.';
+
+        this.snackBar.open(
+          typeof mensagem === 'string'
+            ? mensagem
+            : 'Não foi possível atualizar o aluno.',
+          'Fechar',
+          { duration: 4000 }
+        );
+      }
+    });
+  }
+
+  cancelarEdicao(): void {
+    this.alunoEditandoId = null;
+
+    this.alunoEditando = {
+      nome: '',
+      email: '',
+      matricula: 0
+    };
   }
 
   ativarAluno(aluno: Aluno): void {
