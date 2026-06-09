@@ -90,6 +90,7 @@
         type="text"
         name="filtro"
         [(ngModel)]="filtro"
+        (ngModelChange)="aoPesquisar()"
         placeholder="Nome, email ou perfil"
       />
     </mat-form-field>
@@ -110,7 +111,7 @@
       </p>
     }
 
-    @for (bibliotecario of bibliotecariosFiltrados(); track bibliotecario.id) {
+    @for (bibliotecario of bibliotecariosPaginados(); track bibliotecario.id) {
       <mat-card class="card-bibliotecario">
 
         <mat-card-title>
@@ -132,7 +133,10 @@
 
           <div class="info-bibliotecario">
             <mat-icon>event</mat-icon>
-            <p><strong>Contratação:</strong> <span>{{ bibliotecario.anoDeContratacao }}</span></p>
+            <p>
+              <strong>Contratação:</strong>
+              <span>{{ bibliotecario.anoDeContratacao | dataBr }}</span>
+            </p>
           </div>
 
           <div class="status-container">
@@ -182,4 +186,17 @@
       </mat-card>
     }
   </div>
+
+  @if (bibliotecariosFiltrados().length > 0) {
+    <mat-paginator
+      class="paginador"
+      [length]="bibliotecariosFiltrados().length"
+      [pageSize]="itensPorPagina"
+      [pageIndex]="paginaAtual"
+      [pageSizeOptions]="opcoesItensPorPagina"
+      (page)="mudarPagina($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+
 </div>

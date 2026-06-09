@@ -119,6 +119,7 @@
         type="text"
         name="filtro"
         [(ngModel)]="filtro"
+        (ngModelChange)="aoPesquisar()"
         placeholder="Título, autor, gênero ou categoria"
       />
     </mat-form-field>
@@ -129,7 +130,7 @@
       <p class="sem-resultados">Nenhum livro encontrado.</p>
     }
 
-    @for (livro of livrosFiltrados(); track livro.id) {
+    @for (livro of livrosPaginados(); track livro.id) {
       <mat-card class="card-livro">
 
         <div class="capa-container">
@@ -186,4 +187,16 @@
       </mat-card>
     }
   </div>
+
+  @if (livrosFiltrados().length > 0) {
+    <mat-paginator
+      class="paginador"
+      [length]="livrosFiltrados().length"
+      [pageSize]="itensPorPagina"
+      [pageIndex]="paginaAtual"
+      [pageSizeOptions]="opcoesItensPorPagina"
+      (page)="mudarPagina($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
 </div>

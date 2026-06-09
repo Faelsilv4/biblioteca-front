@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
@@ -24,7 +25,8 @@ import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmac
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule
   ],
   templateUrl: './gerenciar-alunos.html',
   styleUrl: './gerenciar-alunos.css',
@@ -40,6 +42,10 @@ export class GerenciarAlunos implements OnInit {
 
   filtro = '';
   alunoEditandoId: number | null = null;
+
+  paginaAtual = 0;
+  itensPorPagina = 6;
+  opcoesItensPorPagina = [6, 9, 12];
 
   alunoEditando = {
     nome: '',
@@ -88,7 +94,34 @@ export class GerenciarAlunos implements OnInit {
       return;
     }
 
-    this.alunoService.atualizar(this.alunoEditandoId, this.alunoEditando).subscribe({
+    const dadosAtualizados = {
+      nome: this.alunoEditando.nome.trim(),
+      email: this.alunoEditando.email.trim(),
+      matricula: Number(this.alunoEditando.matricula)
+    };
+
+    if (!dadosAtualizados.nome) {
+      this.snackBar.open('Informe um nome válido.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!dadosAtualizados.email) {
+      this.snackBar.open('Informe um email válido.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!dadosAtualizados.matricula || dadosAtualizados.matricula <= 0) {
+      this.snackBar.open('Informe uma matrícula válida.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    this.alunoService.atualizar(this.alunoEditandoId, dadosAtualizados).subscribe({
       next: () => {
         this.snackBar.open('Aluno atualizado com sucesso!', 'Fechar', {
           duration: 3000
@@ -203,5 +236,21 @@ export class GerenciarAlunos implements OnInit {
       aluno.email.toLowerCase().includes(texto) ||
       aluno.matricula.toString().includes(texto)
     );
+  }
+
+  alunosPaginados(): Aluno[] {
+    const inicio = this.paginaAtual * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+
+    return this.alunosFiltrados().slice(inicio, fim);
+  }
+
+  mudarPagina(evento: PageEvent): void {
+    this.paginaAtual = evento.pageIndex;
+    this.itensPorPagina = evento.pageSize;
+  }
+
+  aoPesquisar(): void {
+    this.paginaAtual = 0;
   }
 }

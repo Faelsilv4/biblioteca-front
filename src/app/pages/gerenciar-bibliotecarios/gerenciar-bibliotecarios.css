@@ -67,6 +67,7 @@
 .acoes-formulario {
   grid-column: 1 / -1;
   display: flex;
+  gap: 12px;
   justify-content: center;
   margin-top: 14px;
 }
@@ -202,4 +203,30 @@ mat-card-actions {
 .erro {
   color: red;
   text-align: center;
+}
+
+.paginador {
+  margin-top: 28px;
+  border-radius: 14px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .grid-bibliotecarios {
+    grid-template-columns: 1fr;
+  }
+
+  mat-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .acoes-formulario {
+    flex-direction: column;
+  }
 }

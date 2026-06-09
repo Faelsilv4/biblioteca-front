@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { DataBrPipe } from '../../pipes/data-br-pipe';
 
@@ -24,7 +25,8 @@ import { DataBrPipe } from '../../pipes/data-br-pipe';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    DataBrPipe
+    DataBrPipe,
+    MatPaginatorModule
   ],
   templateUrl: './livros.html',
   styleUrl: './livros.css',
@@ -39,6 +41,10 @@ export class Livros implements OnInit {
   erro = this.livroService.mensagemErro();
 
   filtro = '';
+
+  paginaAtual = 0;
+  itensPorPagina = 6;
+  opcoesItensPorPagina = [6, 9, 12];
 
   ngOnInit(): void {
     this.livroService.carregar();
@@ -81,6 +87,22 @@ export class Livros implements OnInit {
       livro.genero.toLowerCase().includes(texto) ||
       livro.categoria.toLowerCase().includes(texto)
     );
+  }
+
+  livrosPaginados() {
+    const inicio = this.paginaAtual * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+
+    return this.livrosFiltrados().slice(inicio, fim);
+  }
+
+  mudarPagina(evento: PageEvent): void {
+    this.paginaAtual = evento.pageIndex;
+    this.itensPorPagina = evento.pageSize;
+  }
+
+  aoPesquisar(): void {
+    this.paginaAtual = 0;
   }
 
   ehAluno(): boolean {

@@ -13,6 +13,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -32,7 +34,8 @@ import {
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   templateUrl: './gerenciar-livros.html',
   styleUrl: './gerenciar-livros.css',
@@ -46,6 +49,10 @@ export class GerenciarLivros implements OnInit {
 
   livroEditandoId: number | null = null;
   filtro = '';
+
+  paginaAtual = 0;
+  itensPorPagina = 6;
+  opcoesItensPorPagina = [6, 9, 12];
 
   novoLivro = {
     titulo: '',
@@ -178,7 +185,8 @@ export class GerenciarLivros implements OnInit {
       });
     });
   }
-  livrosFiltrados() {
+
+  livrosFiltrados(): Livro[] {
     const texto = this.filtro.toLowerCase().trim();
 
     if (!texto) {
@@ -191,6 +199,22 @@ export class GerenciarLivros implements OnInit {
       livro.genero.toLowerCase().includes(texto) ||
       livro.categoria.toLowerCase().includes(texto)
     );
+  }
+
+  livrosPaginados(): Livro[] {
+    const inicio = this.paginaAtual * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+
+    return this.livrosFiltrados().slice(inicio, fim);
+  }
+
+  mudarPagina(evento: PageEvent): void {
+    this.paginaAtual = evento.pageIndex;
+    this.itensPorPagina = evento.pageSize;
+  }
+
+  aoPesquisar(): void {
+    this.paginaAtual = 0;
   }
 
   private limparFormulario(): void {

@@ -11,99 +11,106 @@
 
   <mat-form-field appearance="outline" class="campo-pesquisa">
     <mat-label>Pesquisar livro</mat-label>
-    <input
-      matInput
-      type="text"
-      name="filtro"
-      [(ngModel)]="filtro"
-      placeholder="Título, autor, gênero ou categoria"
-    />
+    <input matInput 
+    type="text" 
+    name="filtro" 
+    [(ngModel)]="filtro" 
+    (ngModelChange)="aoPesquisar()"
+    placeholder="Título, autor, gênero ou categoria" />
   </mat-form-field>
 
   @if (carregando()) {
-    <p class="mensagem">Carregando livros...</p>
+  <p class="mensagem">Carregando livros...</p>
   }
 
   @if (erro()) {
-    <p class="erro">{{ erro() }}</p>
+  <p class="erro">{{ erro() }}</p>
   }
 
   <div class="grid-livros">
     @if (!carregando() && livrosFiltrados().length === 0) {
-      <p class="sem-resultados">Nenhum livro encontrado.</p>
+    <p class="sem-resultados">Nenhum livro encontrado.</p>
     }
 
-    @for (livro of livrosFiltrados(); track livro.id) {
-      <mat-card class="card-livro">
+    @for (livro of livrosPaginados(); track livro.id) {
+    <mat-card class="card-livro">
 
-        <div class="capa-container">
-          <img
-            [src]="livro.urlCapa || '/assets/sem-capa.png'"
-            (error)="$any($event.target).src = '/assets/sem-capa.png'"
-            alt="Capa do livro"
-            class="capa-livro"
-          >
+      <div class="capa-container">
+        <img [src]="livro.urlCapa || '/assets/sem-capa.png'" 
+        (error)="$any($event.target).src = '/assets/sem-capa.png'"
+        alt="Capa do livro" class="capa-livro">
+      </div>
+
+      <mat-card-title>
+        <mat-icon>auto_stories</mat-icon>
+        {{ livro.titulo }}
+      </mat-card-title>
+
+      <mat-card-content>
+        <div class="info-livro">
+          <mat-icon>person</mat-icon>
+          <p><strong>Autor:</strong> <span>{{ livro.autor }}</span></p>
         </div>
 
-        <mat-card-title>
-          <mat-icon>auto_stories</mat-icon>
-          {{ livro.titulo }}
-        </mat-card-title>
+        <div class="info-livro">
+          <mat-icon>local_offer</mat-icon>
+          <p><strong>Gênero:</strong> <span>{{ livro.genero }}</span></p>
+        </div>
 
-        <mat-card-content>
-          <div class="info-livro">
-            <mat-icon>person</mat-icon>
-            <p><strong>Autor:</strong> <span>{{ livro.autor }}</span></p>
-          </div>
+        <div class="info-livro">
+          <mat-icon>category</mat-icon>
+          <p><strong>Categoria:</strong> <span>{{ livro.categoria }}</span></p>
+        </div>
 
-          <div class="info-livro">
-            <mat-icon>local_offer</mat-icon>
-            <p><strong>Gênero:</strong> <span>{{ livro.genero }}</span></p>
-          </div>
+        <div class="info-livro">
+          <mat-icon>description</mat-icon>
+          <p><strong>Páginas:</strong> <span>{{ livro.numPaginas }}</span></p>
+        </div>
 
-          <div class="info-livro">
-            <mat-icon>category</mat-icon>
-            <p><strong>Categoria:</strong> <span>{{ livro.categoria }}</span></p>
-          </div>
+        <div class="info-livro">
+          <mat-icon>event</mat-icon>
+          <p><strong>Publicação:</strong> <span>{{ livro.anoDePublicacao | dataBr }}</span></p>
+        </div>
 
-          <div class="info-livro">
-            <mat-icon>description</mat-icon>
-            <p><strong>Páginas:</strong> <span>{{ livro.numPaginas }}</span></p>
-          </div>
-
-          <div class="info-livro">
-            <mat-icon>event</mat-icon>
-            <p><strong>Publicação:</strong> <span>{{ livro.anoDePublicacao | dataBr }}</span></p>
-          </div>
-
-          <div class="status-container">
-            @if (livro.status === 'DISPONIVEL') {
-              <span class="status disponivel">Disponível</span>
-            } @else {
-              <span class="status emprestado">Emprestado</span>
-            }
-          </div>
-        </mat-card-content>
-
-        <mat-card-actions>
-          @if (ehAluno()) {
-            @if (livro.status === 'DISPONIVEL') {
-              <button mat-raised-button color="primary" (click)="emprestar(livro.id)">
-                Emprestar
-              </button>
-            } @else {
-              <button mat-raised-button disabled>
-                Indisponível
-              </button>
-            }
-          } @else if (ehBibliotecario()) {
-            <button mat-raised-button disabled>
-              Apenas alunos podem emprestar
-            </button>
+        <div class="status-container">
+          @if (livro.status === 'DISPONIVEL') {
+          <span class="status disponivel">Disponível</span>
+          } @else {
+          <span class="status emprestado">Emprestado</span>
           }
-        </mat-card-actions>
+        </div>
+      </mat-card-content>
 
-      </mat-card>
+      <mat-card-actions>
+        @if (ehAluno()) {
+        @if (livro.status === 'DISPONIVEL') {
+        <button mat-raised-button color="primary" (click)="emprestar(livro.id)">
+          Emprestar
+        </button>
+        } @else {
+        <button mat-raised-button disabled>
+          Indisponível
+        </button>
+        }
+        } @else if (ehBibliotecario()) {
+        <button mat-raised-button disabled>
+          Apenas alunos podem emprestar
+        </button>
+        }
+      </mat-card-actions>
+
+    </mat-card>
     }
   </div>
+  @if (livrosFiltrados().length > 0) {
+    <mat-paginator
+      class="paginador"
+      [length]="livrosFiltrados().length"
+      [pageSize]="itensPorPagina"
+      [pageIndex]="paginaAtual"
+      [pageSizeOptions]="opcoesItensPorPagina"
+      (page)="mudarPagina($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
 </div>

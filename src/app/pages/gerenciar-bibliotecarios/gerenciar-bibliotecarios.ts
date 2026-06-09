@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Navbar } from '../../components/navbar/navbar';
 import { BibliotecarioService } from '../../services/bibliotecario.service';
 import { Bibliotecario } from '../../models/bibliotecario.model';
+import { DataBrPipe } from '../../pipes/data-br-pipe';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
@@ -28,7 +30,9 @@ import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmac
     MatButtonModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule,
+    DataBrPipe
   ],
   templateUrl: './gerenciar-bibliotecarios.html',
   styleUrl: './gerenciar-bibliotecarios.css'
@@ -44,6 +48,10 @@ export class GerenciarBibliotecarios implements OnInit {
 
   filtro = '';
   bibliotecarioEditandoId: number | null = null;
+
+  paginaAtual = 0;
+  itensPorPagina = 6;
+  opcoesItensPorPagina = [6, 9, 12];
 
   novoBibliotecario = {
     nome: '',
@@ -267,6 +275,22 @@ export class GerenciarBibliotecarios implements OnInit {
       bibliotecario.email.toLowerCase().includes(texto) ||
       bibliotecario.role.toLowerCase().includes(texto)
     );
+  }
+
+  bibliotecariosPaginados(): Bibliotecario[] {
+    const inicio = this.paginaAtual * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+
+    return this.bibliotecariosFiltrados().slice(inicio, fim);
+  }
+
+  mudarPagina(evento: PageEvent): void {
+    this.paginaAtual = evento.pageIndex;
+    this.itensPorPagina = evento.pageSize;
+  }
+
+  aoPesquisar(): void {
+    this.paginaAtual = 0;
   }
 
   private limparFormulario(): void {

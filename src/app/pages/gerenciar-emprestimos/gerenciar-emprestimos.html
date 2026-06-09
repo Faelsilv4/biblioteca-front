@@ -12,89 +12,118 @@
   <mat-form-field appearance="outline" class="campo-pesquisa">
     <mat-label>Pesquisar empréstimo</mat-label>
 
-    <input matInput type="text" name="filtro" [(ngModel)]="filtro" placeholder="Aluno, email ou livro" />
+    <input
+      matInput
+      type="text"
+      name="filtro"
+      [(ngModel)]="filtro"
+      (ngModelChange)="aoPesquisar()"
+      placeholder="Aluno, email ou livro"
+    />
   </mat-form-field>
 
   @if (carregando()) {
-  <p class="mensagem">Carregando empréstimos...</p>
+    <p class="mensagem">Carregando empréstimos...</p>
   }
 
   <div class="grid-emprestimos">
+
     @if (!carregando() && emprestimosFiltrados().length === 0) {
-    <p class="sem-resultados">
-      Nenhum empréstimo encontrado.
-    </p>
+      <p class="sem-resultados">
+        Nenhum empréstimo encontrado.
+      </p>
     }
 
-    @for (emprestimo of emprestimosFiltrados(); track emprestimo.id) {
-    <mat-card class="card-emprestimo">
+    @for (emprestimo of emprestimosPaginados(); track emprestimo.id) {
 
-      <mat-card-title>
-        <mat-icon>auto_stories</mat-icon>
-        {{ emprestimo.livro.titulo }}
-      </mat-card-title>
+      <mat-card class="card-emprestimo">
 
-      <mat-card-content>
+        <mat-card-title>
+          <mat-icon>auto_stories</mat-icon>
+          {{ emprestimo.livro.titulo }}
+        </mat-card-title>
 
-        <div class="info-emprestimo">
-          <mat-icon>person</mat-icon>
-          <p>
-            <strong>Aluno:</strong>
-            <span>{{ emprestimo.usuario.nome }}</span>
-          </p>
-        </div>
+        <mat-card-content>
 
-        <mat-card-actions>
+          <div class="info-emprestimo">
+            <mat-icon>person</mat-icon>
+            <p>
+              <strong>Aluno:</strong>
+              <span>{{ emprestimo.usuario.nome }}</span>
+            </p>
+          </div>
+
           @if (!emprestimo.dataDevolucao) {
-          <button mat-raised-button color="primary" (click)="devolverLivro(emprestimo.id)">
-            <mat-icon>assignment_return</mat-icon>
-            Devolver Livro
-          </button>
+            <mat-card-actions>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="devolverLivro(emprestimo.id)">
+                <mat-icon>assignment_return</mat-icon>
+                Devolver Livro
+              </button>
+            </mat-card-actions>
           }
-        </mat-card-actions>
 
-        <div class="info-emprestimo">
-          <mat-icon>email</mat-icon>
-          <p>
-            <strong>Email:</strong>
-            <span>{{ emprestimo.usuario.email }}</span>
-          </p>
-        </div>
+          <div class="info-emprestimo">
+            <mat-icon>email</mat-icon>
+            <p>
+              <strong>Email:</strong>
+              <span>{{ emprestimo.usuario.email }}</span>
+            </p>
+          </div>
 
-        <div class="info-emprestimo">
-          <mat-icon>event</mat-icon>
-          <p>
-            <strong>Data do Empréstimo:</strong>
-            <span>{{ emprestimo.dataEmprestimo | dataBr }}</span>
-          </p>
-        </div>
+          <div class="info-emprestimo">
+            <mat-icon>event</mat-icon>
+            <p>
+              <strong>Data do Empréstimo:</strong>
+              <span>{{ emprestimo.dataEmprestimo | dataBr }}</span>
+            </p>
+          </div>
 
-        <div class="info-emprestimo">
-          <mat-icon>event_available</mat-icon>
-          <p>
-            <strong>Data da Devolução:</strong>
+          <div class="info-emprestimo">
+            <mat-icon>event_available</mat-icon>
+            <p>
+              <strong>Data da Devolução:</strong>
+
+              @if (emprestimo.dataDevolucao) {
+                <span>{{ emprestimo.dataDevolucao | dataBr }}</span>
+              } @else {
+                <span>Ainda não devolvido</span>
+              }
+            </p>
+          </div>
+
+          <div class="status-container">
             @if (emprestimo.dataDevolucao) {
-            <span>{{ emprestimo.dataDevolucao | dataBr }}</span>
+              <span class="status devolvido">
+                Devolvido
+              </span>
             } @else {
-            <span>Ainda não devolvido</span>
+              <span class="status emprestado">
+                Emprestado
+              </span>
             }
-          </p>
-        </div>
+          </div>
 
-        <div class="status-container">
-          @if (emprestimo.dataDevolucao) {
-          <span class="status devolvido">
-            Devolvido
-          </span>
-          } @else {
-          <span class="status emprestado">
-            Emprestado
-          </span>
-          }
-        </div>
+        </mat-card-content>
 
-      </mat-card-content>
-    </mat-card>
+      </mat-card>
+
     }
+
   </div>
+
+  @if (emprestimosFiltrados().length > 0) {
+    <mat-paginator
+      class="paginador"
+      [length]="emprestimosFiltrados().length"
+      [pageSize]="itensPorPagina"
+      [pageIndex]="paginaAtual"
+      [pageSizeOptions]="opcoesItensPorPagina"
+      (page)="mudarPagina($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+
 </div>

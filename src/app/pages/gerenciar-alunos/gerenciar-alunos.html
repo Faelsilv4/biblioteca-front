@@ -77,6 +77,7 @@
         type="text"
         name="filtro"
         [(ngModel)]="filtro"
+        (ngModelChange)="aoPesquisar()"
         placeholder="Nome, email ou matrícula"
       />
     </mat-form-field>
@@ -97,7 +98,7 @@
       </p>
     }
 
-    @for (aluno of alunosFiltrados(); track aluno.id) {
+    @for (aluno of alunosPaginados(); track aluno.id) {
       <mat-card class="card-aluno">
 
         <mat-card-title>
@@ -161,4 +162,17 @@
       </mat-card>
     }
   </div>
+
+  @if (alunosFiltrados().length > 0) {
+    <mat-paginator
+      class="paginador"
+      [length]="alunosFiltrados().length"
+      [pageSize]="itensPorPagina"
+      [pageIndex]="paginaAtual"
+      [pageSizeOptions]="opcoesItensPorPagina"
+      (page)="mudarPagina($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  }
+
 </div>

@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmacao-dialog';
 
@@ -26,7 +27,8 @@ import { ConfirmacaoDialog } from '../../components/confirmacao-dialog/confirmac
     MatInputModule,
     MatIconModule,
     DataBrPipe,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule
   ],
   templateUrl: './gerenciar-emprestimos.html',
   styleUrl: './gerenciar-emprestimos.css',
@@ -41,6 +43,10 @@ export class GerenciarEmprestimos implements OnInit {
   erro = signal<string | null>(null);
 
   filtro = '';
+
+  paginaAtual = 0;
+  itensPorPagina = 6;
+  opcoesItensPorPagina = [6, 9, 12];
 
   ngOnInit(): void {
     this.carregarTodosEmprestimos();
@@ -75,6 +81,22 @@ export class GerenciarEmprestimos implements OnInit {
       emprestimo.usuario.email.toLowerCase().includes(texto) ||
       emprestimo.livro.titulo.toLowerCase().includes(texto)
     );
+  }
+
+  emprestimosPaginados(): EmprestimoAdmin[] {
+    const inicio = this.paginaAtual * this.itensPorPagina;
+    const fim = inicio + this.itensPorPagina;
+
+    return this.emprestimosFiltrados().slice(inicio, fim);
+  }
+
+  mudarPagina(evento: PageEvent): void {
+    this.paginaAtual = evento.pageIndex;
+    this.itensPorPagina = evento.pageSize;
+  }
+
+  aoPesquisar(): void {
+    this.paginaAtual = 0;
   }
 
   devolverLivro(emprestimoId: number): void {
