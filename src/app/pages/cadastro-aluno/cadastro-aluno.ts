@@ -36,18 +36,94 @@ export class CadastroAluno {
   };
 
   cadastrar(): void {
-    this.authService.cadastrarAluno(this.aluno).subscribe({
+
+    const nome = this.aluno.nome.trim();
+    const email = this.aluno.email.trim();
+    const senha = this.aluno.senha.trim();
+    const matricula = Number(this.aluno.matricula);
+
+    if (!nome) {
+      this.snackBar.open('Informe o nome do aluno.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!email) {
+      this.snackBar.open('Informe o email.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailValido.test(email)) {
+      this.snackBar.open('Informe um email válido.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!senha) {
+      this.snackBar.open('Informe a senha.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (senha.length < 4) {
+      this.snackBar.open(
+        'A senha deve possuir pelo menos 4 caracteres.',
+        'Fechar',
+        { duration: 3000 }
+      );
+      return;
+    }
+
+    if (!matricula || matricula <= 0) {
+      this.snackBar.open(
+        'Informe uma matrícula válida.',
+        'Fechar',
+        { duration: 3000 }
+      );
+      return;
+    }
+
+    this.authService.cadastrarAluno({
+      nome,
+      email,
+      senha,
+      matricula
+    }).subscribe({
       next: () => {
-        this.snackBar.open('Aluno cadastrado com sucesso!', 'Fechar', {
-          duration: 3000
-        });
+        this.snackBar.open(
+          'Aluno cadastrado com sucesso!',
+          'Fechar',
+          {
+            duration: 3000
+          }
+        );
 
         this.router.navigate(['/']);
       },
-      error: () => {
-        this.snackBar.open('Não foi possível cadastrar o aluno.', 'Fechar', {
-          duration: 3000
-        });
+      error: (erro) => {
+
+        const mensagem =
+          erro.error?.message ||
+          erro.error?.mensagem ||
+          erro.error ||
+          'Não foi possível cadastrar o aluno.';
+
+        this.snackBar.open(
+          typeof mensagem === 'string'
+            ? mensagem
+            : 'Não foi possível cadastrar o aluno.',
+          'Fechar',
+          {
+            duration: 4000
+          }
+        );
       }
     });
   }

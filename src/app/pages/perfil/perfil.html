@@ -36,38 +36,102 @@
 
       <hr>
 
-      @if (!editandoPerfil) {
+      @if (!editandoPerfil && !editandoSenha) {
 
-        <div class="acoes">
-          <button mat-raised-button color="primary" (click)="editarPerfil()">
-            <mat-icon>edit</mat-icon>
-            Editar Perfil
-          </button>
-        </div>
+      <div class="acoes">
+        <button mat-raised-button color="primary" (click)="editarPerfil()">
+          <mat-icon>edit</mat-icon>
+          Editar Perfil
+        </button>
 
-      } @else {
+        <button mat-raised-button color="accent" (click)="abrirAlterarSenha()">
+          <mat-icon>lock</mat-icon>
+          Alterar Senha
+        </button>
+      </div>
 
-        <h3>Atualizar Perfil</h3>
+      }
 
-        <mat-form-field appearance="outline" class="campo">
-          <mat-label>Novo Nome</mat-label>
-          <input matInput type="text" [(ngModel)]="novoNome" />
-        </mat-form-field>
+      @if (editandoPerfil) {
 
-        <mat-form-field appearance="outline" class="campo">
-          <mat-label>Novo Email</mat-label>
-          <input matInput type="email" [(ngModel)]="novoEmail" />
-        </mat-form-field>
+      <h3>Atualizar Perfil</h3>
 
-        <div class="acoes">
-          <button mat-raised-button color="primary" (click)="atualizarPerfil()">
-            Salvar Alterações
-          </button>
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Novo Nome</mat-label>
+        <input matInput type="text" [(ngModel)]="novoNome" />
+      </mat-form-field>
 
-          <button mat-button type="button" (click)="cancelarEdicao()">
-            Cancelar
-          </button>
-        </div>
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Novo Email</mat-label>
+        <input matInput type="email" [(ngModel)]="novoEmail" />
+      </mat-form-field>
+
+      <div class="acoes">
+        <button mat-raised-button color="primary" (click)="atualizarPerfil()">
+          Salvar Alterações
+        </button>
+
+        <button mat-button type="button" (click)="cancelarEdicao()">
+          Cancelar
+        </button>
+      </div>
+
+      }
+
+      @if (editandoSenha) {
+
+      <h3>Alterar Senha</h3>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Senha Atual</mat-label>
+
+        <input matInput [type]="mostrarSenhaAtual ? 'text' : 'password'" [(ngModel)]="senhaAtual" />
+
+        <button mat-icon-button matSuffix type="button" (click)="mostrarSenhaAtual = !mostrarSenhaAtual">
+
+          <mat-icon>
+            {{ mostrarSenhaAtual ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Nova Senha</mat-label>
+
+        <input matInput [type]="mostrarNovaSenha ? 'text' : 'password'" [(ngModel)]="novaSenha" />
+
+        <button mat-icon-button matSuffix type="button" (click)="mostrarNovaSenha = !mostrarNovaSenha">
+
+          <mat-icon>
+            {{ mostrarNovaSenha ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo">
+        <mat-label>Confirmar Nova Senha</mat-label>
+
+        <input matInput [type]="mostrarConfirmacaoSenha ? 'text' : 'password'" [(ngModel)]="confirmarNovaSenha" />
+
+        <button mat-icon-button matSuffix type="button" (click)="mostrarConfirmacaoSenha = !mostrarConfirmacaoSenha">
+
+          <mat-icon>
+            {{ mostrarConfirmacaoSenha ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+        </button>
+      </mat-form-field>
+      <div class="acoes">
+        <button mat-raised-button color="primary" (click)="alterarSenha()">
+          Salvar Nova Senha
+        </button>
+
+        <button mat-button type="button" (click)="cancelarAlterarSenha()">
+          Cancelar
+        </button>
+      </div>
 
       }
 

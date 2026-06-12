@@ -31,13 +31,22 @@ export class Perfil implements OnInit {
 
   nomeUsuario = this.authService.nomeUsuario;
 
+  mostrarSenhaAtual = false;
+  mostrarNovaSenha = false;
+  mostrarConfirmacaoSenha = false;
+
   email = '';
   tipoUsuario = '';
 
   novoNome = '';
   novoEmail = '';
 
+  senhaAtual = '';
+  novaSenha = '';
+  confirmarNovaSenha = '';
+
   editandoPerfil = false;
+  editandoSenha = false;
 
   ngOnInit(): void {
     this.email = localStorage.getItem('email') || '';
@@ -48,6 +57,8 @@ export class Perfil implements OnInit {
 
   editarPerfil(): void {
     this.editandoPerfil = true;
+    this.editandoSenha = false;
+
     this.novoNome = this.nomeUsuario() || '';
     this.novoEmail = this.email;
   }
@@ -108,6 +119,95 @@ export class Perfil implements OnInit {
           typeof mensagem === 'string'
             ? mensagem
             : 'Não foi possível atualizar o perfil.',
+          'Fechar',
+          { duration: 4000 }
+        );
+      }
+    });
+  }
+
+  abrirAlterarSenha(): void {
+    this.editandoSenha = true;
+    this.editandoPerfil = false;
+
+    this.senhaAtual = '';
+    this.novaSenha = '';
+    this.confirmarNovaSenha = '';
+  }
+
+  cancelarAlterarSenha(): void {
+    this.editandoSenha = false;
+
+    this.senhaAtual = '';
+    this.novaSenha = '';
+    this.confirmarNovaSenha = '';
+  }
+
+  alterarSenha(): void {
+    const senhaAtual = this.senhaAtual.trim();
+    const novaSenha = this.novaSenha.trim();
+    const confirmarNovaSenha = this.confirmarNovaSenha.trim();
+
+    if (!senhaAtual) {
+      this.snackBar.open('Informe a senha atual.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!novaSenha) {
+      this.snackBar.open('Informe a nova senha.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (novaSenha.length < 4) {
+      this.snackBar.open('A nova senha deve possuir pelo menos 4 caracteres.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!confirmarNovaSenha) {
+      this.snackBar.open('Confirme a nova senha.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (novaSenha !== confirmarNovaSenha) {
+      this.snackBar.open('A confirmação da senha não confere.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    this.authService.alterarSenha({
+      senhaAtual,
+      novaSenha,
+      confirmarNovaSenha
+    }).subscribe({
+      next: () => {
+        this.snackBar.open('Senha alterada com sucesso!', 'Fechar', {
+          duration: 3000
+        });
+
+        this.cancelarAlterarSenha();
+      },
+      error: (erro) => {
+        console.error(erro);
+
+        const mensagem =
+          erro.error?.message ||
+          erro.error?.mensagem ||
+          erro.error ||
+          'Não foi possível alterar a senha.';
+
+        this.snackBar.open(
+          typeof mensagem === 'string'
+            ? mensagem
+            : 'Não foi possível alterar a senha.',
           'Fechar',
           { duration: 4000 }
         );

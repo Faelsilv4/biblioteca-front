@@ -36,6 +36,12 @@ interface AtualizarPerfilRequest {
   email: string;
 }
 
+interface AlterarSenhaRequest {
+  senhaAtual: string;
+  novaSenha: string;
+  confirmarNovaSenha: string;
+}
+
 interface PerfilResponse {
   id: number;
   nome: string;
@@ -94,6 +100,14 @@ export class AuthService {
 
         this.nomeUsuario.set(resposta.nome);
       })
+    );
+  }
+
+  alterarSenha(dados: AlterarSenhaRequest): Observable<string> {
+    return this.http.put(
+      `${this.perfilUrl}/senha`,
+      dados,
+      { responseType: 'text' }
     );
   }
 
