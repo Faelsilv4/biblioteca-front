@@ -29,7 +29,7 @@ interface RegistroResponse {
 })
 export class BibliotecarioService {
   private readonly http = inject(HttpClient);
-  private readonly apiAdmin = 'http://localhost:8080/api/admin/bibliotecarios';
+  private readonly apiAdmin = '/api/admin/bibliotecarios';
 
   cadastrar(dados: RegistroBibliotecarioRequest): Observable<RegistroResponse> {
     return this.http.post<RegistroResponse>(

@@ -10,7 +10,7 @@ type LivroRequest = Omit<Livro, 'id' | 'status'>;
 })
 export class LivroService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/livros';
+  private readonly apiUrl = '/api/livros';
 
   private readonly livros = signal<Livro[]>([]);
   private readonly carregando = signal(false);

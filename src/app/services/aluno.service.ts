@@ -15,7 +15,7 @@ interface AtualizarAlunoRequest {
 })
 export class AlunoService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/admin/alunos';
+  private readonly apiUrl = '/api/admin/alunos';
 
   listar(): Observable<Aluno[]> {
     return this.http.get<Aluno[]>(this.apiUrl);

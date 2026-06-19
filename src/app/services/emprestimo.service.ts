@@ -11,7 +11,7 @@ import { EmprestimoAdmin } from '../models/emprestimo-admin.model';
 })
 export class EmprestimoService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/emprestimos';
+  private readonly apiUrl = '/api/emprestimos';
 
   private readonly emprestimos = signal<Emprestimo[]>([]);
   private readonly carregando = signal(false);

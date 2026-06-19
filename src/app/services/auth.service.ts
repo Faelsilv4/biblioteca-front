@@ -56,8 +56,8 @@ interface PerfilResponse {
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:8080/api/auth';
-  private readonly perfilUrl = 'http://localhost:8080/api/perfil';
+  private readonly apiUrl = '/api/auth';
+  private readonly perfilUrl = '/api/perfil';
 
   nomeUsuario = signal<string | null>(localStorage.getItem('nome'));
 

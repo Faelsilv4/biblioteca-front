@@ -55,7 +55,7 @@ export class Dashboard implements OnInit {
 
   carregarDashboard(): void {
     this.http.get<DashboardResponse>(
-      'http://localhost:8080/api/dashboard'
+      '/api/dashboard'
     ).subscribe({
       next: (dados) => {
         this.dashboard.set(dados);
