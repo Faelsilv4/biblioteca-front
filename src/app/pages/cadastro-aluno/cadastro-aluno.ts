@@ -83,10 +83,16 @@ export class CadastroAluno {
 
     if (!matricula || matricula <= 0) {
       this.snackBar.open(
-        'Informe uma matrícula válida.',
+        'Informe uma matrícula válida.' ,
         'Fechar',
         { duration: 3000 }
       );
+      return;
+    }
+    if (matricula > 999999999) {
+      this.snackBar.open('A matrícula deve ter no máximo 9 dígitos.', 'Fechar', {
+        duration: 3000
+      });
       return;
     }
 
