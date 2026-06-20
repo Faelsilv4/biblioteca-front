@@ -50,7 +50,7 @@ export class GerenciarAlunos implements OnInit {
   alunoEditando = {
     nome: '',
     email: '',
-    matricula: 0
+    matricula: ''
   };
 
   ngOnInit(): void {
@@ -80,7 +80,7 @@ export class GerenciarAlunos implements OnInit {
     this.alunoEditando = {
       nome: aluno.nome,
       email: aluno.email,
-      matricula: aluno.matricula
+      matricula: String(aluno.matricula)
     };
 
     window.scrollTo({
@@ -94,32 +94,59 @@ export class GerenciarAlunos implements OnInit {
       return;
     }
 
-    const dadosAtualizados = {
-      nome: this.alunoEditando.nome.trim(),
-      email: this.alunoEditando.email.trim(),
-      matricula: Number(this.alunoEditando.matricula)
-    };
+    const nome = this.alunoEditando.nome.trim();
+    const email = this.alunoEditando.email.trim();
+    const matriculaTexto = String(this.alunoEditando.matricula).trim();
 
-    if (!dadosAtualizados.nome) {
+    if (!nome) {
       this.snackBar.open('Informe um nome válido.', 'Fechar', {
         duration: 3000
       });
       return;
     }
 
-    if (!dadosAtualizados.email) {
+    if (!email) {
       this.snackBar.open('Informe um email válido.', 'Fechar', {
         duration: 3000
       });
       return;
     }
 
-    if (!dadosAtualizados.matricula || dadosAtualizados.matricula <= 0) {
-      this.snackBar.open('Informe uma matrícula válida.', 'Fechar', {
+    const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailValido.test(email)) {
+      this.snackBar.open('Informe um email válido.', 'Fechar', {
         duration: 3000
       });
       return;
     }
+
+    if (!matriculaTexto) {
+      this.snackBar.open('Informe a matrícula.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (!/^\d+$/.test(matriculaTexto)) {
+      this.snackBar.open('A matrícula deve conter apenas números.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    if (matriculaTexto.length > 9) {
+      this.snackBar.open('A matrícula deve ter no máximo 9 dígitos.', 'Fechar', {
+        duration: 3000
+      });
+      return;
+    }
+
+    const dadosAtualizados = {
+      nome,
+      email,
+      matricula: Number(matriculaTexto)
+    };
 
     this.alunoService.atualizar(this.alunoEditandoId, dadosAtualizados).subscribe({
       next: () => {
@@ -156,7 +183,7 @@ export class GerenciarAlunos implements OnInit {
     this.alunoEditando = {
       nome: '',
       email: '',
-      matricula: 0
+      matricula: ''
     };
   }
 
