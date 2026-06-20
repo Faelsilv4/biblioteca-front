@@ -42,11 +42,11 @@
         <mat-label>Matrícula</mat-label>
         <input
           matInput
-          type="number"
+          type="text"
           name="matricula"
           [(ngModel)]="aluno.matricula"
-          min="1"
-          max="999999999"
+          maxlength="9"
+          inputmode="numeric"
           required
         />
       </mat-form-field>

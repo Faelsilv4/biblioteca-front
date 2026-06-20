@@ -32,7 +32,7 @@ export class CadastroAluno {
     nome: '',
     email: '',
     senha: '',
-    matricula: 0
+    matricula: ''
   };
 
   cadastrar(): void {
@@ -40,7 +40,7 @@ export class CadastroAluno {
     const nome = this.aluno.nome.trim();
     const email = this.aluno.email.trim();
     const senha = this.aluno.senha.trim();
-    const matricula = Number(this.aluno.matricula);
+    const matriculaTexto = String(this.aluno.matricula).trim();
 
     if (!nome) {
       this.snackBar.open('Informe o nome do aluno.', 'Fechar', {
@@ -81,20 +81,34 @@ export class CadastroAluno {
       return;
     }
 
-    if (!matricula || matricula <= 0) {
+    if (!matriculaTexto) {
       this.snackBar.open(
-        'Informe uma matrícula válida.' ,
+        'Informe a matrícula.',
         'Fechar',
         { duration: 3000 }
       );
       return;
     }
-    if (matricula > 999999999) {
-      this.snackBar.open('A matrícula deve ter no máximo 9 dígitos.', 'Fechar', {
-        duration: 3000
-      });
+
+    if (!/^\d+$/.test(matriculaTexto)) {
+      this.snackBar.open(
+        'A matrícula deve conter apenas números.',
+        'Fechar',
+        { duration: 3000 }
+      );
       return;
     }
+
+    if (matriculaTexto.length > 9) {
+      this.snackBar.open(
+        'A matrícula deve ter no máximo 9 dígitos.',
+        'Fechar',
+        { duration: 3000 }
+      );
+      return;
+    }
+
+    const matricula = Number(matriculaTexto);
 
     this.authService.cadastrarAluno({
       nome,
